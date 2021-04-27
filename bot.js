@@ -10,7 +10,6 @@ const client = new Discord.Client({
 });
 
 client.commands = new Discord.Collection();
-client.events   = new Discord.Collection();
 
 // --------------------------------------------------------------
 
@@ -41,7 +40,7 @@ getJsFiles("./commands/").then(commandFiles => {
 getJsFiles("./events/").then(eventFiles => {
 	eventFiles.forEach(file => {
 		const event = require(`./commands/${file}`);
-		client.events.set(event.name, event);
+		if (event) client.on(event.name, (...args) => event.run(bot, ...args));
 	});
 }
 
