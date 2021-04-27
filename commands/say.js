@@ -6,7 +6,13 @@ module.exports = {
 	cooldown: 0
 }
 
+// --------------------------------------------------------------
 
 module.exports.run = (message, args) => {
-	const channel = 
-	if (!args.length) return message.channel
+	const { client, channel } = message;
+	
+	message.delete();
+	if (!args.length) return channel.send("🤐");
+	
+	channel.send(args.join(" "));
+}
