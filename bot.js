@@ -4,7 +4,7 @@ const fs      = require("fs");
 
 // --------------------------------------------------------------
 
-const { token, logo, prefix, logprefix } = require("./files/settings.json");
+const { token, logo, logprefix } = require("./files/settings.json");
 const client = new Discord.Client({
 	ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILDS', 'GUILD_MESSAGES'] }
 });
