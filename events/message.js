@@ -19,6 +19,8 @@ module.exports.run = async (client, message) => {
 
 // --------------------------------------------------------------
 
-	const command = client.commands.get(commandname);
+	if (!content.startsWith(prefix)) return;
+
+	const command = client.commands.find(command => command.name.some(name => name === commandname));
 	if (command) command.run(message, args);
 }
