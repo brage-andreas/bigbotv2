@@ -1,3 +1,5 @@
+// TRENGER CHANNELS, ROLES, EMBEDCOLOURGREEN, EMBEDURL
+
 module.exports = { name: "guildMemberAdd" }
 
 // --------------------------------------------------------------
