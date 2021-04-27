@@ -23,12 +23,8 @@ const getJsFiles = async (dir) => {
 	await fs.readdir(dir, (error, files) => {
 		if (error) console.error(error);
 
-		const commandFiles = files.filter(file => file.endsWith(".js"));
-		if (!commandFiles) return console.log(`${logprefix} No command files found.`);
-		
-		return files;
+		return files.filter(file => file.endsWith(".js"));
 	});
-	return;	
 }
 
 // -- Commands --------------------------------------------------
@@ -52,4 +48,3 @@ getJsFiles("./events/").then(eventFiles => {
 // -- Login ------------------------------------------------------
 
 client.login(token);
-	
