@@ -6,8 +6,8 @@ module.exports = { name: "guildMemberAdd" }
 
 module.exports.run = async (member) => {
 
-	const { guild, user } = member;
-	const { channels, roles, embedColourGreen, embedURL } = null;
+	const { guild } = member;
+	const embedColourGreen = null, embedURL = null;
 
 // --------------------------------------------------------------
 	
