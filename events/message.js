@@ -1,3 +1,5 @@
+const { chatLog } = require("../files/auto.js");
+
 module.exports = { name: "message" }
 
 // --------------------------------------------------------------
@@ -11,6 +13,10 @@ module.exports.run = async (client, message) => {
 	if (message.type === "PINS_ADD") return message.delete();
 	if (channel.tupe === "DM")       return;
 	if (author.bot)                  return;
+
+// --------------------------------------------------------------
+
+    chatLog(message);
 
 // --------------------------------------------------------------
 
