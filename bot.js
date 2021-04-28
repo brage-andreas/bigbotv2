@@ -1,9 +1,7 @@
 const Discord = require("discord.js");
 const fs      = require("fs");
 
-
 // --------------------------------------------------------------
-
 
 const { token } = require("./files/settings.json");
 const client = new Discord.Client({
@@ -12,16 +10,12 @@ const client = new Discord.Client({
 
 client.commands = new Discord.Collection();
 
-
 // --------------------------------------------------------------
-
 
 console.clear();
 // console.log(logo);
 
-
 // --------------------------------------------------------------
-
 
 const getJsFiles = async (dir) => {
 	const files = fs.readdirSync(dir)
@@ -29,9 +23,7 @@ const getJsFiles = async (dir) => {
     return files.filter(file => file.endsWith(".js")); 
 }
 
-
 // -- Commands --------------------------------------------------
-
 
 getJsFiles("./commands/").then(commandFiles => {
 	commandFiles.forEach(file => {
@@ -40,9 +32,7 @@ getJsFiles("./commands/").then(commandFiles => {
 	});
 });
 
-
 // -- Events ----------------------------------------------------
-
 
 getJsFiles("./events/").then(eventFiles => {
 	eventFiles.forEach(file => {
@@ -51,8 +41,6 @@ getJsFiles("./events/").then(eventFiles => {
 	});
 });
 
-
 // -- Login ------------------------------------------------------
-
 
 client.login(token);
