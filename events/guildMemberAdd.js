@@ -6,16 +6,14 @@ module.exports = { name: "guildMemberAdd" }
 
 module.exports.run = async (member) => {
 
-	const { guild } = member;
+	const { guild, user } = member;
 	const embedColourGreen = null, embedURL = null;
 
 // --------------------------------------------------------------
 	
-	const allChannels = guild.channels.cache.filter(ch => ch.type === "text").sort((a, b) => b.position - a.position);
+    const channel = allChannels.find(ch => ch.name === "watermusk") || allChannels.first();
 
-	let channel = allChannels.find(ch => ch.name === "watermusk");
-	if (!channel) channel = allChannels.first();
-
+	const allChannels = guild.channels.cache.filter(ch => ch.type === "text");
 	const role = guild.roles.cache.find(ro => ro.name === "gonny gonzalez");
 
 // --------------------------------------------------------------
@@ -23,7 +21,7 @@ module.exports.run = async (member) => {
 	const joinEmbed = new Discord.MessageEmbed()
 	.setColor(embedColourGreen)
 	.setTitle("HEISANNHEISANNHEISANN")
-	.setAuthor(member.user.tag, member.user.displayAvatarURL({ format: "png", dynamic: true, size: 4096 }))
+	.setAuthor(user.tag, user.displayAvatarURL({ format: "png", dynamic: true, size: 4096 }))
 	.setURL(embedURL)
 	.setDescription(`vekomen ${member}`)
 	.addField("Info", `• Laget: made\n\n• Kom: came`)
