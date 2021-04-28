@@ -37,5 +37,5 @@ module.exports.run = (message, args) => {
 		channel.send(helpEmbed);
 	}
 
-    botLog(chalk `{grey Used} HELP`, guild.name, channel.name);
+    botLog(chalk `{grey Used} HELP`);
 }

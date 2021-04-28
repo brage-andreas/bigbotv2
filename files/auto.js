@@ -1,5 +1,9 @@
 const chalk = require("chalk");
 
+
+// --------------------------------------------------------------
+
+
 /**
  * @returns [sec, min, hour]
  */
@@ -9,6 +13,19 @@ const time = () => {
     return [ nil(date.getSeconds()), nil(date.getMinutes()), nil(date.getHours()) ];
 }
 
+const emoji = (client, emoji) => {
+    const emojiTable = {
+        "questionmark": "830465898154033192",
+        "check"       : "830470096698081330",
+        "err"         : "830465898061889566",
+        "adm"         : "830465921205665803"
+    }
+
+    const clientEmojiID = emojiTable[emoji];
+
+    if (!clientEmojiID) return null;
+    else return client.emojis.cache.get(clientEmojiID);
+}
 
 // --------------------------------------------------------------
 
@@ -58,10 +75,10 @@ const botLog = (custom, guildName=null, channelName=null) => {
     const [ sec, min, hour ] = time();
 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
-    const strChannel = channelName ? `#${channelName} `               : "";
-    const strGuild   = guildName   ? chalk `{grey in "${guildName}"}` : "";
+    const strChannel = channelName ? `#${channelName} `                : "";
+    const strGuild   = guildName   ? chalk `{grey in "${guildName}"} ` : "";
 
-    console.log(chalk `${strTime} {red CLIENT} ${strChannel}${strGuild} {grey >} ${custom}`);
+    console.log(chalk `${strTime} {red ~/ CLIENT} ${strChannel}${strGuild}{grey >} ${custom}`);
 }
 
 
@@ -76,4 +93,4 @@ const parseCreatedJoinedAt = () => {
 // --------------------------------------------------------------
 
 
-module.exports = { time, chatLog, botLog, parseCreatedJoinedAt };
+module.exports = { time, emoji, chatLog, botLog, parseCreatedJoinedAt };
