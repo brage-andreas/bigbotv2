@@ -1,4 +1,6 @@
+const chalk            = require("chalk");
 const { MessageEmbed } = require("discord.js");
+const { botLog }       = require("../files/auto.js");
 
 module.exports = {
 	name: ["help", "commands"],
@@ -11,7 +13,7 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = (message, args) => {
-	const { client, channel, member, author } = message;
+	const { client, channel, member, author, guild } = message;
 
 // --------------------------------------------------------------
 	
@@ -34,4 +36,6 @@ module.exports.run = (message, args) => {
 		.setTimestamp();
 		channel.send(helpEmbed);
 	}
+
+    botLog(chalk `{grey Used} HELP`, guild.name, channel.name);
 }

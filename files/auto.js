@@ -59,7 +59,7 @@ const botLog = (custom, guildName=null, channelName=null) => {
 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
     const strChannel = channelName ? `#${channelName} `               : "";
-    const strGuild   = guildName   ? chalk `{grey in "${guildname}"}` : "";
+    const strGuild   = guildName   ? chalk `{grey in "${guildName}"}` : "";
 
     console.log(chalk `${strTime} {red CLIENT} ${strChannel}${strGuild} {grey >} ${custom}`);
 }
