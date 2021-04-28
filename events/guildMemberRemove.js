@@ -1,12 +1,10 @@
-
-const { channels, embedColourRed, embedURL } = null;
-
 module.exports = { name: "guildMemberRemove" }
 
 // --------------------------------------------------------------
 
 module.exports.run = async (member) => {
 	const { guild, user } = member;
+	const embedColourRed = null, embedURL = null;
 
 // --------------------------------------------------------------
 
@@ -24,6 +22,4 @@ module.exports.run = async (member) => {
 	.setTimestamp();
     
 	channel.send(joinEmbed).catch(console.error);
-    
-        }
 }
