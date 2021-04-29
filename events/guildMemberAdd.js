@@ -10,8 +10,10 @@ module.exports = { name: "guildMemberAdd" }
 
 module.exports.run = async (member) => {
 
+    const green = "hex('#5AD658')";
     const { guild, user } = member;
 	const { embedColourGreen, embedURL, channels, roles } = await config("465490885417762827");
+    const [ made, came ] = parseCreatedJoinedAt(user.createdAt, member.joinedAt);
 
 // --------------------------------------------------------------
 	
@@ -28,7 +30,7 @@ module.exports.run = async (member) => {
 	.setAuthor(user.tag, user.displayAvatarURL({ format: "png", dynamic: true, size: 4096 }))
 	.setURL(embedURL)
 	.setDescription(`vekomen ${member}`)
-	.addField("Info", `• Laget: made\n\n• Kom: came`)
+	.addField("Info", `• Laget: ${made}\n\n• Kom: ${came}`)
 	.setTimestamp();
 
 // --------------------------------------------------------------
@@ -38,5 +40,5 @@ module.exports.run = async (member) => {
 
 // --------------------------------------------------------------
 
-    botLog(chalk `${user.tag} {grey (${user.id})} {hex("${embedColourGreen}") joined}`, guild.name);
+    botLog(chalk `${user.tag} {grey (${user.id})} {${green} joined}`, guild.name);
 }

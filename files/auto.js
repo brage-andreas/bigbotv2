@@ -44,6 +44,7 @@ const emoji = (client, emoji) => {
 
 const cache = {};
 const chatLog = (message) => { 
+    const green = "hex('#5AD658')", yellow = "hex('#FFC152')";
     const { guild, author, channel, attachments, embeds, edited, content } = message;
     const [ sec, min, hour ] = time();
 
@@ -60,14 +61,15 @@ const chatLog = (message) => { 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
     const strGuild   = chalk `{grey in "${guild.name}"}`;
     const strID      = chalk `{grey (${author.id})}`;
-    const strAuthor  = chalk `{green ${author.tag}}`;
-    const strChannel =       `#${channel.name}`;
+    const strAuthor  = chalk `{${green} ${author.tag}}`;
+    const strChannel = chalk `{${yellow} #${channel.name}}`;
 
-    const base = cache.lastUserID !== author.id && cache.lastChannelID !== channel.id
+    const base = cache.lastUserID !== author.id || cache.lastChannelID !== channel.id
                ? `\n${strAuthor} ${strID} ${strChannel} ${strGuild}\n`
                : "";
+    const edit = edited ? chalk `{${yellow} <EDIT>}: ` : ""
 
-    console.log(chalk `${base}${strTime} {grey >}${edited ? " <EDIT>: " : ""} ${content} {grey < ${extras}}`);
+    console.log(chalk `${base}${strTime} {grey >}${edit} ${content} {grey < ${extras}}`);
 
     cache.lastChannelID = channel.id;
     cache.lastUserID    = author .id;
@@ -75,13 +77,14 @@ const chatLog = (message) => { 
 
 
 const botLog = (custom, guildName=null, channelName=null) => {
+    const red = "hex('#FF5733')"
     const [ sec, min, hour ] = time();
 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
     const strChannel = channelName ? `#${channelName} `                : "";
     const strGuild   = guildName   ? chalk `{grey in "${guildName}"} ` : "";
 
-    console.log(chalk `${strTime} {red ~/ CLIENT} ${strChannel}${strGuild}{grey >} ${custom}`);
+    console.log(chalk `\n{${red} ~/ CLIENT} ${strChannel}${strGuild}\n   ${strTime} ${custom}\n`);
 }
 
 
@@ -90,8 +93,43 @@ const botLog = (custom, guildName=null, channelName=null) => {
 
 
 
-const parseCreatedJoinedAt = () => {
-    //
+const parseCreatedJoinedAt = (created, joined) => {
+    Number.prototype.zero = function() { return this<10 ? "0"+this : this };
+    const date = new Date();
+
+    if (!created && !joined) return null;
+
+    const getTime = (tm) => {
+        let year   =  tm.getFullYear().zero();
+        let minute =  tm.getMinutes() .zero();
+        let month  = (tm.getMonth()+1).zero();
+        let hour   =  tm.getHours()   .zero();
+        let dato   =  tm.getDate()    .zero();
+
+        let made = [`\`${year}-${month}-${dato} ${hour}:${minute}\``];
+
+        let minsAgo  = (date-tm)/60000;
+        let hoursAgo = (date-tm)/3600000;
+        let daysAgo  = (date-tm)/86400000;
+        let yearsAgo = (date-tm)/31536000000;
+        
+        if (minsAgo <1) made.push("Under ett minutt siden");               else
+        if (hoursAgo<1) made.push(`${Math.ceil(minsAgo)} minutter siden`); else
+        if (daysAgo <1) made.push(`${Math.ceil(hoursAgo)} timer siden`);   else
+        if (yearsAgo<1) made.push(`${Math.ceil(daysAgo)} dager siden`);
+                   else made.push(`${yearsAgo.toFixed(1).replace(".", ",")} år siden`);
+
+        return made.join("\n");
+    }
+
+    let fMade, fCame;
+    if (created) fMade = getTime(created);
+    if (joined)  fCame = getTime(joined);
+
+    if ( fMade &&  fCame) return [fMade, fCame]; else
+    if ( fMade && !fCame) return  fMade; else
+    if (!fMade &&  fCame) return  fCame;
+    else return null;
 }
 
 
