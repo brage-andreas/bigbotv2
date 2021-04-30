@@ -1,4 +1,5 @@
 const chalk = require("chalk");
+const { config } = require("../files/auto");
 
 // --------------------------------------------------------------
 
@@ -7,18 +8,19 @@ module.exports = { name: "ready" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client) => {
-    const yellow = "rgb(255, 174, 66)"
-	const { user, guilds } = client;
+    const yellow = "rgb(255, 174, 66)", green = "rgb(110, 255, 110)";
+    const { activity, activitytype } = await config("465490885417762827");
+	const { user, guilds, channels } = client;
 
-	user.setActivity("lolol", { type: "LISTENING" }).catch(console.error);
+	user.setActivity(activity, { type: activitytype }).catch(console.error);
 	
-    console.log(chalk `${yellow} ┌────────────────────┐}`)
-    console.log(chalk `{rgb(255, 174, 66) │} ${hour}:${min}:${sec} • {rgb(110, 255, 110) Started} {rgb(255, 174, 66) │}`);
-    console.log(chalk `{rgb(255, 174, 66) └────────────────────┘}\n\n`)
+    console.log(chalk `{${yellow} ┌────────────────────┐}`)
+    console.log(chalk `{${yellow} │} ${hour}:${min}:${sec} • {${green} Started} {${yellow} │}`);
+    console.log(chalk `{${yellow} └────────────────────┘}\n\n`)
     
-    console.log(chalk `{rgb(255, 174, 66) │} {grey Alias} ${bot.user.tag} {grey (${bot.user.id})}`);
-    console.log(chalk `{rgb(255, 174, 66) │} {grey In} ${bot.guilds.cache.size} {grey servers and} ${bot.channels.cache.size} {grey channels}`);
-    console.log(chalk `{rgb(255, 174, 66) │} {grey DB successfully connected}`);
+    console.log(chalk `{${yellow} │} {grey Alias} ${user.tag} {grey (${user.id})}`);
+    console.log(chalk `{${yellow} │} {grey In} ${guilds.cache.size} {grey servers and} ${channels.cache.size} {grey channels}`);
+    console.log(chalk `{${yellow} │} {grey DB successfully connected}`);
 
     console.log("\n");
 }

@@ -41,7 +41,7 @@ console.log(logo);
 // --------------------------------------------------------------
 
 const getJsFiles = async (dir) => {
-	const files = fs.readdirSync(dir)
+	const files = fs.readdirSync(dir);
 
     return files.filter(file => file.endsWith(".js")); 
 }

@@ -1,6 +1,6 @@
 const chalk            = require("chalk");
 const { MessageEmbed } = require("discord.js");
-const { botLog }       = require("../files/auto.js");
+const { config, botLog }       = require("../files/auto.js");
 
 module.exports = {
 	name: ["help", "commands"],
@@ -22,18 +22,20 @@ module.exports.run = (message, args) => {
 	if (!args.length) channel.send( getAllCmds(client.commands) );
     
 	else {
+        const { embedURL, embedColourYellow } = await config("465490885417762827");
 		const command = client.commands.filter(cmd => cmd.name.some(name => name === args[0])).first();
 
 		if (!command) return channel.send("eek");
 
 		const helpEmbed = new MessageEmbed()
-		.setColor()
+		.setColor(embedColourYellow)
 		.setTitle(command.name.join(", "))
-		.setURL("https://lol.com")
+		.setURL(embedURL)
 		.setAuthor(member.displayName, author.displayAvatarURL())
 		.addField(`Hvordan`, `\`?${command.use}\` <valgfritt>, enten|eller`)
 		.addField(`Hva`, command.about)
 		.setTimestamp();
+        
 		channel.send(helpEmbed);
 	}
 
