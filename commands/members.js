@@ -1,4 +1,5 @@
-const { emoji } = require("../files/auto.js");
+const { MessageEmbed } = require("discord.js");
+const { config, colours, emoji } = require("../files/auto.js");
 
 module.exports = {
 	name: ["members", "user"],
@@ -10,13 +11,24 @@ module.exports = {
 
 // --------------------------------------------------------------
 
-module.exports.run = (message, args) => {
+module.exports.run = async (message, args) => {
 	const { mentions, guild, client, channel } = message;
+    const { embedURL } = await config("465490885417762827");
+    const { yellow } = colours;
 
-    const role = mentions.roles.size ? mentions.roles.first() : guild.channels.cache.get(args[0]);
+    const role = mentions.roles.size ? mentions.roles.first() : guild.roles.cache.get(args[0]);
     if (!role) return message.react(emoji(client, "err"));
 
-    const members = role.members.map(member => `<@${member.id}> (${member.user.tag})`).join("\n");
+    const members = role.members
+    .sort((a, b) => a.displayName.toLowerCase() < b.displayName.toLowerCase() ? -1 : 1)
+    .array().map((member, i) => `\`${i+1<10?"0"+(i+1):i+1}\` <@${member.id}> (${member.user.tag})`).join("\n");
 
-    channel.send(`${members.length} stykkji\n${members}`);
+    const membersEmbed = new MessageEmbed()
+    .setColor(yellow)
+    .setTitle(role.name)
+    .setURL(embedURL)
+    .addField(`${role.members.size} stykkji`, members)
+    .setTimestamp();
+
+    channel.send(membersEmbed);
 }

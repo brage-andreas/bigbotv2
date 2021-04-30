@@ -12,6 +12,35 @@ const colours = {};
 
 
 
+const mongo = async () => {
+    const options = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
+    await mongoose.connect(mPath, options);
+    return mongoose;
+}
+
+const config = async (id) => {
+    let data;
+    await mongo().then(async mongoose => {
+        try {
+            data = await configSchema.findOne({ _id: id });
+        }
+        
+        finally {
+            mongoose.connection.close();
+        }
+    });
+    colours.yellow = data.embedColourYellow;
+    colours.green  = data.embedColourGreen;
+    colours.red    = data.embedColourRed;
+    return data;
+}
+
+
+
+// --------------------------------------------------------------
+
+
+
 /**
  * @returns [sec, min, hour]
  */
@@ -34,6 +63,10 @@ const emoji = (client, emoji) => {
 
     if (!clientEmojiID) return null;
     else return client.emojis.cache.get(clientEmojiID);
+}
+
+const col = () => {
+
 }
 
 
@@ -138,30 +171,4 @@ const parseCreatedJoinedAt = (created, joined) => {
 
 
 
-const mongo = async () => {
-    const options = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
-    await mongoose.connect(mPath, options);
-    return mongoose;
-}
-
-const config = async (id) => {
-    let data;
-    await mongo().then(async mongoose => {
-        try {
-            data = await configSchema.findOne({ _id: id });
-        }
-        
-        finally {
-            mongoose.connection.close();
-        }
-    });
-    return data;
-}
-
-
-
-// --------------------------------------------------------------
-
-
-
-module.exports = { time, emoji, chatLog, botLog, parseCreatedJoinedAt, mongo, config };
+module.exports = { time, emoji, colours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };
