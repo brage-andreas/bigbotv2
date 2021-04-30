@@ -1,11 +1,11 @@
 const { MessageEmbed } = require("discord.js");
-const { config, colours, emoji } = require("../files/auto.js");
+const { config, colours, emoji, botLog } = require("../files/auto.js");
 
 module.exports = {
 	name: ["members", "user"],
 	use: "members @role|roleID",
 	about: "Sender alle i en spesifisert rolle",
-	category: "",
+	category: "info",
 	cooldown: 0
 }
 
@@ -21,7 +21,9 @@ module.exports.run = async (message, args) => {
 
     const members = role.members
     .sort((a, b) => a.displayName.toLowerCase() < b.displayName.toLowerCase() ? -1 : 1)
-    .array().map((member, i) => `\`${i+1<10?"0"+(i+1):i+1}\` <@${member.id}> (${member.user.tag})`).join("\n");
+    .array()
+    .map((member, i) => `\`${i+1<10?"0"+(i+1):i+1}\` <@${member.id}> (${member.user.tag})`)
+    .join("\n");
 
     const membersEmbed = new MessageEmbed()
     .setColor(yellow)
@@ -31,4 +33,6 @@ module.exports.run = async (message, args) => {
     .setTimestamp();
 
     channel.send(membersEmbed);
+
+    botLog(chalk `{grey Used} MEMBERS {grey on role} ${role} {grey (${role.id})}`);
 }

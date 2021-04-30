@@ -1,13 +1,19 @@
+const chalk = require("chalk");
+const { botLog } = require("../files/auto.js");
+
+// --------------------------------------------------------------
+
 module.exports = {
 	name: [""],
 	use: "",
 	about: "",
-	category: "",
+	category: "management|fun|info|support",
 	cooldown: 0
 }
 
 // --------------------------------------------------------------
 
-module.exports.run = (message, args) => {
+module.exports.run = async (message, args) => {
 	
+    botLog(chalk `{grey Used} X`);
 }

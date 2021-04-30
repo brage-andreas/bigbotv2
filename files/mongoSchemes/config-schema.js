@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const configSchema = mongoose.Schema({
     _id: String,
-    admins: String,
+    admins: Array,
     embedURL: String,
     embedColourYellow: String,
     embedColourGreen: String,
