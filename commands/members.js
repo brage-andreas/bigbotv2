@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
 const { config, colours, emoji, botLog } = require("../files/auto.js");
 
