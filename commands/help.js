@@ -10,7 +10,7 @@ module.exports = {
 	use: "help <kommando|-all>",
 	about: "Sender ei liste over alle kommandoer, eller info om en som er spesifisert",
 	category: "support",
-	cooldown: 0
+	cooldown: 1
 }
 
 // --------------------------------------------------------------

@@ -7,7 +7,7 @@ module.exports = {
 	use: "fake join|leave",
 	about: "fake",
 	category: "management",
-	cooldown: 0
+	cooldown: 5
 }
 
 // --------------------------------------------------------------
