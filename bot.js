@@ -11,7 +11,6 @@ const client = new Discord.Client({
 const { token } = require("./files/settings.json");
 
 client.commands  = new Discord.Collection();
-client.cooldowns = new Discord.Collection();
 
 // --------------------------------------------------------------
 
