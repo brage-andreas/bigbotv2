@@ -10,7 +10,8 @@ const client = new Discord.Client({
 });
 const { token } = require("./files/settings.json");
 
-client.commands = new Discord.Collection();
+client.commands  = new Discord.Collection();
+client.cooldowns = new Discord.Collection();
 
 // --------------------------------------------------------------
 
@@ -35,7 +36,7 @@ const logo = `
         =@@@@@@@@@@@@@@@@@@@=
            ==@@@@@@@@@@@==
 \n\n`;
-console.clear();
+process.stdout.write("\033c");
 console.log(logo);
 
 // --------------------------------------------------------------

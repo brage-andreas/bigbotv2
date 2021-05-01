@@ -55,6 +55,7 @@ const emoji = (client, emoji) => {
     const emojiTable = {
         "questionmark": "830465898154033192",
         "check"       : "830470096698081330",
+        "time"        : "838010368537133056",
         "err"         : "830465898061889566",
         "adm"         : "830465921205665803"
     }
@@ -63,10 +64,6 @@ const emoji = (client, emoji) => {
 
     if (!clientEmojiID) return null;
     else return client.emojis.cache.get(clientEmojiID);
-}
-
-const col = () => {
-
 }
 
 

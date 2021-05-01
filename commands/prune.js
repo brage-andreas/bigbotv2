@@ -14,23 +14,25 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = async (message, args) => {
-	const { client, channel } = message;
+	const { client, guild, channel } = message;
     const { admins } = await config("465490885417762827");
 
     if (!admins.some(adm => message.author.id === adm)) return message.react(emoji(client, "adm"));
     if (args.length && !Number(args[0])) return message.react(emoji(client, "err"));
 
-    const user = message.mentions.users?.first();
+    const user = message.mentions.users?.first() || guild.members.cache.get(args[1])?.user;
+    if (!user && args[1]) return message.react(emoji(client, "err"));
 
-    let amount = Math.ceil(args[0]);
-    if (amount <= 0  ) amount = 1;
-    if (amount >= 100) amount = 99;
+    const amount = Math.ceil(args[0]) >= 100 ? 99 : Math.ceil(args[0]) <= 0 ? 1 : Math.ceil(args[0]);
 
     await message.delete();
     channel.messages.fetch({ limit: amount }).then(messages => {
         if (user) messages = messages.filter(msg => msg.author.id === user.id);
-        channel.bulkDelete(messages).catch(err => console.log(err.stack));
+        channel.bulkDelete(messages)
+        .then(msgs => {
+            if (user) botLog(chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages limited to} ${user.tag} {grey (${user.id})}`);
+            else      botLog(chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages}`);
+        })
+        .catch(err => console.log(err.stack));
     });
-
-    botLog(chalk `{grey Used} PRUNE {grey with amount set to} ${amount}`);
 }

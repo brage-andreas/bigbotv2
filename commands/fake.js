@@ -21,7 +21,8 @@ module.exports.run = async (message, args) => {
     const guildMemberAdd    = require("../events/guildMemberAdd.js");
     const guildMemberRemove = require("../events/guildMemberRemove.js");
 
-    if (args[0] === "join" ) guildMemberAdd   .run(message.member);
-    if (args[0] === "leave") guildMemberRemove.run(message.member);
-    else message.react(client, "err");
+    if (args[0] === "join" ) return guildMemberAdd   .run(message.member);
+    if (args[0] === "leave") return guildMemberRemove.run(message.member);
+    
+    message.react(emoji(client, "err"));
 }
