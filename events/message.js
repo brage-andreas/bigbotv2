@@ -7,12 +7,12 @@ module.exports = { name: "message" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client, message) => {
-	const { channel, author, content, guild } = message;
+	const { channel, author, content } = message;
     const { commands } = client;
 	const prefix = "?";
 
 	if (message.type === "PINS_ADD") return message.delete();
-	if (channel.tupe === "DM")       return;
+	if (channel.type === "DM")       return;
 	if (author.bot)                  return;
 
     chatLog(message);

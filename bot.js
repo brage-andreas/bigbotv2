@@ -54,7 +54,7 @@ getJsFiles("./commands/").then(commandFiles => {
 		const command = require(`./commands/${file}`);
 		client.commands.set(command.name, command);
 	});
-    console.log("                  Done!\n\n");
+    console.log("                 Done!\n\n");
 });
 
 // -- Events ----------------------------------------------------
