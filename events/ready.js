@@ -13,7 +13,7 @@ module.exports.run = async (client) => {
 	const { user, guilds, channels } = client;
     const [sec, min, hour] = time();
 
-	user.setActivity(activity, { type: activitytype }).catch(console.error);
+	user.setActivity(activity || "default", { type: activitytype || "WATCHING" }).catch(console.error);
 	
     console.log(chalk `{${yellow} ┌────────────────────┐}`)
     console.log(chalk `{${yellow} │} ${hour}:${min}:${sec} • {${green} Started} {${yellow} │}`);
