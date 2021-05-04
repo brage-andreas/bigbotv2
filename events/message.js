@@ -11,9 +11,8 @@ module.exports.run = async (client, message) => {
     const { commands } = client;
 	const prefix = "?";
 
-	if (message.type === "PINS_ADD") return message.delete();
-	if (channel.type === "DM")       return;
-	if (author.bot)                  return;
+	if (channel.type === "DM" || author.bot) return;
+	if (message.type === "PINS_ADD")         return message.delete();
 
     chatLog(message);
 
