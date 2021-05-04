@@ -1,3 +1,4 @@
+const { yellow, red, green } = require("chalk");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
 
@@ -72,9 +73,21 @@ const emoji = (client, emoji) => {
 
 
 
+const getColours = () => {
+    String.prototype.r = function() { return `hex("${this.replace("#", "")}")` }
+    let { yellow, red, green } = colours;
+    return { yellow: yellow.r(), red: red.r(), green: green.r() }
+}
+
+
+
+// --------------------------------------------------------------
+
+
+
 const cache = {};
 const chatLog = (message) => { 
-    const green = "hex('#5AD658')", yellow = "hex('#FFC152')";
+    const { green, yellow } = getColours();
     const { guild, author, channel, attachments, embeds, edited, content } = message;
     const [ sec, min, hour ] = time();
 
@@ -107,14 +120,17 @@ const chatLog = (message) => { 
 
 
 const botLog = (custom, guildName=null, channelName=null) => {
-    const red = "hex('#FF5733')"
+    const { red, yellow } = getColours();
     const [ sec, min, hour ] = time();
 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
-    const strChannel = channelName ? `#${channelName} `                : "";
-    const strGuild   = guildName   ? chalk `{grey in "${guildName}"} ` : "";
+    const strChannel = channelName ? chalk `{${yellow} #${channelName}} ` : "";
+    const strGuild   = guildName   ? chalk `{grey in "${guildName}"} `        : "";
 
-    console.log(chalk `\n{${red} ~/ CLIENT} ${strChannel}${strGuild}\n   ${strTime} ${custom}\n`);
+    console.log(chalk `\n{${red} ~/ CLIENT} ${strChannel}${strGuild}\n   ${strTime} ${custom}`);
+
+    cache.lastChannelID = null;
+    cache.lastUserID    = null;
 }
 
 
@@ -168,4 +184,4 @@ const parseCreatedJoinedAt = (created, joined) => {
 
 
 
-module.exports = { time, emoji, colours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };
+module.exports = { time, emoji, colours, getColours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };

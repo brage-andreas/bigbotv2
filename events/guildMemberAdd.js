@@ -32,5 +32,5 @@ module.exports.run = async (member) => {
 	channel.send(joinEmbed).catch(console.error);
 	if (role) member.roles.add(role).catch(console.error);
 
-    botLog(chalk `${user.tag} {grey (${user.id})} {hex("${green}") joined}`, guild.name);
+    botLog(chalk `${user.tag} {grey (${user.id})} {hex("${green}") joined}`, guild.name, channel.name);
 }

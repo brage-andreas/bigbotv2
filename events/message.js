@@ -1,4 +1,5 @@
-const { chatLog, emoji } = require("../files/auto.js");
+const chalk = require("chalk");
+const { config, chatLog, botLog, getColours, emoji } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
@@ -7,17 +8,33 @@ module.exports = { name: "message" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client, message) => {
-	const { channel, author, content } = message;
+	const { channel, author, id, content } = message;
     const { commands } = client;
+
+    const { raveyardID, raveyardTimer } = await config("465490885417762827");
+    const { yellow } = getColours();
+
 	const prefix = "?";
+
 
 	if (channel.type === "DM" || author.bot) return;
 	if (message.type === "PINS_ADD")         return message.delete();
 
+
     chatLog(message);
+
+    
+    if (channel.id === raveyardID) {
+        setTimeout(() => {
+            try { message.delete(); }
+            finally { botLog(chalk `{grey Deleted a message in} {${yellow} #${message.channel.name}} {grey after} ${(raveyardTimer/1000).toFixed(0)}s`); }
+        }, raveyardTimer);
+    }
+
 
 	const args = content.slice(prefix.length).trim().split(/\s+/g);
 	const commandname = args.shift().toLowerCase();
+
 
 	if (!content.startsWith(prefix)) return;
 
