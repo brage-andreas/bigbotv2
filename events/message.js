@@ -17,7 +17,7 @@ module.exports.run = async (client, message) => {
 	const prefix = "?";
 
 
-	if (channel.type === "DM" || author.bot) return;
+	if (channel.type === "DM" || author.id === client.user.id) return;
 	if (message.type === "PINS_ADD")         return message.delete();
 
 
@@ -30,6 +30,9 @@ module.exports.run = async (client, message) => {
             finally { botLog(chalk `{grey Deleted a message in} {${yellow} #${message.channel.name}} {grey after} ${(raveyardTimer/1000).toFixed(0)}s`); }
         }, raveyardTimer);
     }
+
+
+    if (author.bot) return;
 
 
 	const args = content.slice(prefix.length).trim().split(/\s+/g);
