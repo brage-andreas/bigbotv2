@@ -8,7 +8,7 @@ module.exports = { name: "message" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client, message) => {
-	const { channel, author, id, content } = message;
+	const { channel, author, content } = message;
     const { commands } = client;
 
     const { raveyardID, raveyardTimer } = await config("465490885417762827");

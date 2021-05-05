@@ -6,8 +6,7 @@ module.exports = {
     name: ["fake"],
 	use: "fake join|leave",
 	about: "fake",
-	category: "management",
-	cooldown: 5
+	category: "management"
 }
 
 // --------------------------------------------------------------

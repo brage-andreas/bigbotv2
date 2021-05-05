@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { config, time } = require("../files/auto");
+const { getColours, config, time } = require("../files/auto");
 
 // --------------------------------------------------------------
 
@@ -8,12 +8,12 @@ module.exports = { name: "ready" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client) => {
-    const yellow = "rgb(255, 174, 66)", green = "rgb(110, 255, 110)";
-    const { activity, activitytype } = await config("465490885417762827");
+    const { activity, activitytype } = await config(client.user.id);
+    const { yellow, green }          = getColours();
 	const { user, guilds, channels } = client;
-    const [sec, min, hour] = time();
+    const [sec, min, hour]           = time();
 
-	user.setActivity(activity || "default", { type: activitytype || "WATCHING" }).catch(console.error);
+	user.setActivity(activity, { type: activitytype }).catch(console.error);
 	
     console.log(chalk `{${yellow} ┌────────────────────┐}`)
     console.log(chalk `{${yellow} │} ${hour}:${min}:${sec} • {${green} Started} {${yellow} │}`);

@@ -8,8 +8,7 @@ module.exports = {
 	name: ["activities", "activity", "acts", "status"],
 	use: "activities @user|userID",
 	about: "Sender hva brukeren gjør",
-	category: "info",
-	cooldown: 0
+	category: "info"
 }
 
 // --------------------------------------------------------------
@@ -58,6 +57,22 @@ module.exports.run = async (message, args) => {
         else if (type === "LISTENING") {
             const base = state ? `${state.split("; ").join(", ")} - **${details}**` : name;
             content = assets.largeText ? `${base}\nfra ${assets.largeText}` : base;
+        }
+
+        else if (type === "PLAYING") {
+            if (details) {
+                const base = state ? `${name}\n${details} - ${state}` : details;
+                content = assets.largeText ? `${base} som **${assets.largeText}**` : base;
+            }
+
+            else if (state) {
+                const base = state;
+                content = assets.largeText ? `${name}\n${base} som **${assets.largeText}**` : base;
+            }
+
+            else {
+                content = name;
+            }
         }
         
         else {

@@ -7,8 +7,7 @@ module.exports = {
 	name: [""],
 	use: "",
 	about: "",
-	category: "management|fun|info|support",
-	cooldown: 0
+	category: "management|fun|info|support"
 }
 
 // --------------------------------------------------------------

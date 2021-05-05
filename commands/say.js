@@ -7,8 +7,7 @@ module.exports = {
 	name: ["say"],
 	use: "say tekst",
 	about: "Få botten til å si noe",
-	category: "fun",
-	cooldown: 0
+	category: "fun"
 }
 
 // --------------------------------------------------------------

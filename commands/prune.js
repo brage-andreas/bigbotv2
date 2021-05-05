@@ -7,8 +7,7 @@ module.exports = {
 	name: ["prune", "purge", "p"],
 	use: "prune x <@user>",
 	about: "Sletter x antall meldinger.",
-	category: "management",
-	cooldown: 1
+	category: "management"
 }
 
 // --------------------------------------------------------------

@@ -184,4 +184,6 @@ const parseCreatedJoinedAt = (created, joined) => {
 
 
 
+// To cache colours
+config("465490885417762827");
 module.exports = { time, emoji, colours, getColours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };

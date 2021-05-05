@@ -6,8 +6,7 @@ module.exports = {
 	name: ["members", "user"],
 	use: "members @role|roleID",
 	about: "Sender alle i en spesifisert rolle",
-	category: "info",
-	cooldown: 1
+	category: "info"
 }
 
 // --------------------------------------------------------------
