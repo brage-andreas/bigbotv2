@@ -52,7 +52,7 @@ module.exports.run = async (message, args) => {
         if (all) {
             commandsEmbed.addField("iol", cmds.all);
         } else {
-            if (cmds.man.size)  commandsEmbed.addField("mana", formatCmds(cmds.man));
+            if (cmds.man.size)  commandsEmbed.addField("karen da #managre", formatCmds(cmds.man));
             if (cmds.fun.size)  commandsEmbed.addField("moro", formatCmds(cmds.fun));
             if (cmds.info.size) commandsEmbed.addField("info", formatCmds(cmds.info));
             if (cmds.sup.size)  commandsEmbed.addField("jelp", formatCmds(cmds.sup));
