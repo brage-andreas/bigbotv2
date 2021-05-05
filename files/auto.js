@@ -88,7 +88,7 @@ const getColours = () => {
 const cache = {};
 const chatLog = (message) => { 
     const { green, yellow } = getColours();
-    const { guild, author, channel, attachments, embeds, edited, content } = message;
+    const { guild, author, channel, attachments, embeds, edits, content } = message;
     const [ sec, min, hour ] = time();
 
     const attachs     = attachments?.map(attachment => attachment.url).join("; ");
@@ -110,7 +110,7 @@ const chatLog = (message) => { 
     const base = cache.lastUserID !== author.id || cache.lastChannelID !== channel.id
                ? `\n${strAuthor} ${strID} ${strChannel} ${strGuild}\n`
                : "";
-    const edit = edited ? chalk `{${yellow} <EDIT>}: ` : ""
+    const edit = edits.length>1 ? chalk ` {${yellow} EDIT} ${edits[1]} {${yellow} =>}` : ""
 
     console.log(chalk `${base}${strTime} {grey >}${edit} ${content} {grey < ${extras}}`);
 
