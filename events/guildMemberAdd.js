@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
-const { colours, config, botLog, parseCreatedJoinedAt } = require("../files/auto.js");
+const { getColours, config, botLog, parseCreatedJoinedAt } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
@@ -10,8 +10,9 @@ module.exports = { name: "guildMemberAdd" }
 
 module.exports.run = async (member) => {
 
-    const { green } = colours;
+    const clientID = member.guild.me.user.id;
     const { guild, user } = member;
+    const { green } = await getColours(clientID);
 	const { embedURL, channels, roles } = await config("465490885417762827");
     const [ made, came ] = parseCreatedJoinedAt(user.createdAt, member.joinedAt);
 	
@@ -32,5 +33,5 @@ module.exports.run = async (member) => {
 	channel.send(joinEmbed).catch(console.error);
 	if (role) member.roles.add(role).catch(console.error);
 
-    botLog(chalk `${user.tag} {grey (${user.id})} {hex("${green}") joined}`, guild.name, channel.name);
+    botLog(clientID, chalk `${user.tag} {grey (${user.id})} {hex("${green.replace("#", "")}") joined}`, guild.name, channel.name);
 }

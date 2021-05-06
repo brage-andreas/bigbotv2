@@ -85,5 +85,5 @@ module.exports.run = async (message, args) => {
 
     channel.send(actEmbed);
 
-    botLog(chalk `{grey Used} ACTIVITIES {grey on} ${user.tag} {grey (${user.id})}`);
+    botLog(client.user.id, chalk `{grey Used} ACTIVITIES {grey on} ${user.tag} {grey (${user.id})}`);
 }

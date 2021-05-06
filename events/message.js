@@ -12,13 +12,13 @@ module.exports.run = async (client, message) => {
     const { commands } = client;
 
     const { raveyardID, raveyardTimer } = await config("465490885417762827");
-    const { yellow } = getColours();
+    const { yellow } = await getColours(client.user.id, true);
 
 	const prefix = "?";
 
 
 	if (channel.type === "DM" || author.id === client.user.id) return;
-	if (message.type === "PINS_ADD")         return message.delete();
+	if (message.type === "PINS_ADD") return message.delete();
 
 
     chatLog(message);

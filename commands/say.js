@@ -13,12 +13,12 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = (message, args) => {
-	const { channel } = message;
+	const { channel, client } = message;
 	
 	message.delete();
 
 	if (!args.length) return channel.send("🤐");
 	channel.send(args.join(" "));
 
-    botLog(chalk `{grey Used} SAY`);
+    botLog(client.user.id, chalk `{grey Used} SAY`);
 }

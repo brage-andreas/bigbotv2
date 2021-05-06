@@ -1,7 +1,7 @@
 const chalk            = require("chalk");
 const { MessageEmbed } = require("discord.js");
 
-const { config, botLog, colours, emoji } = require("../files/auto.js");
+const { config, botLog, getColours, emoji } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
@@ -16,8 +16,8 @@ module.exports = {
 
 module.exports.run = async (message, args) => {
 	const { guild, client, channel, member, author } = message;
-    const { embedURL } = await config("465490885417762827");
-    const { yellow } = colours;
+    const { embedURL } = await config(client.user.id);
+    const { yellow } = await getColours(client.user.id);
     const prefix = "?"
 
     const getI = (i) => i+1 <10 ? String("0"+(i+1)) : String(i+1); 
@@ -83,5 +83,5 @@ module.exports.run = async (message, args) => {
 		channel.send(helpEmbed);
 	}
 
-    botLog(chalk `{grey Used} HELP`);
+    botLog(client.user.id, chalk `{grey Used} HELP`);
 }

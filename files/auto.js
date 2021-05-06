@@ -5,8 +5,6 @@ const mongoose = require("mongoose");
 const configSchema = require("./mongoSchemes/config-schema.js");
 const { mPath } = require("./settings.json");
 
-const colours = {};
-
 
 
 // --------------------------------------------------------------
@@ -30,9 +28,6 @@ const config = async (id) => {
             mongoose.connection.close();
         }
     });
-    colours.yellow = data.embedColourYellow;
-    colours.green  = data.embedColourGreen;
-    colours.red    = data.embedColourRed;
     return data;
 }
 
@@ -73,10 +68,11 @@ const emoji = (client, emoji) => {
 
 
 
-const getColours = () => {
+const getColours = async (id, format=false) => {
     String.prototype.r = function() { return `hex("${this.replace("#", "")}")` }
-    let { yellow, red, green } = colours;
-    return { yellow: yellow.r(), red: red.r(), green: green.r() }
+    let { yellow, red, green } = await config(id);
+
+    return format ? { yellow: yellow.r(), red: red.r(), green: green.r() } : { yellow: yellow, red: red, green: green };
 }
 
 
@@ -86,8 +82,8 @@ const getColours = () => {
 
 
 const cache = {};
-const chatLog = (message) => { 
-    const { green, yellow } = getColours();
+const chatLog = async (message) => { 
+    const { green, yellow } = await getColours(message.client.user.id, true);
     const { guild, author, channel, attachments, embeds, edits, content } = message;
     const [ sec, min, hour ] = time();
 
@@ -119,8 +115,8 @@ const chatLog = (message) => { 
 }
 
 
-const botLog = (custom, guildName=null, channelName=null) => {
-    const { red, yellow } = getColours();
+const botLog = async (id, custom, guildName=null, channelName=null) => {
+    const { red, yellow } = await getColours(id, true);
     const [ sec, min, hour ] = time();
 
     const strTime    = chalk `{grey ${hour}:${min}:${sec}}`;
@@ -184,6 +180,4 @@ const parseCreatedJoinedAt = (created, joined) => {
 
 
 
-// To cache colours
-config("465490885417762827");
-module.exports = { time, emoji, colours, getColours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };
+module.exports = { time, emoji, getColours, chatLog, botLog, parseCreatedJoinedAt, mongo, config };

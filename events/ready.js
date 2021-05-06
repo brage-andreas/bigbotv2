@@ -9,7 +9,7 @@ module.exports = { name: "ready" }
 
 module.exports.run = async (client) => {
     const { activity, activitytype } = await config(client.user.id);
-    const { yellow, green }          = getColours();
+    const { yellow, green }          = await getColours(client.user.id, true);
 	const { user, guilds, channels } = client;
     const [sec, min, hour]           = time();
 

@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
-const { config, colours, emoji, botLog } = require("../files/auto.js");
+const { config, emoji, botLog, getColours } = require("../files/auto.js");
 
 module.exports = {
 	name: ["members", "users"],
@@ -14,7 +14,7 @@ module.exports = {
 module.exports.run = async (message, args) => {
 	const { mentions, guild, client, channel } = message;
     const { embedURL } = await config("465490885417762827");
-    const { yellow } = colours;
+    const { yellow } = await getColours(client.user.id);
 
     const role = mentions.roles.size ? mentions.roles.first() : guild.roles.cache.get(args[0]);
     if (!role) return message.react(emoji(client, "err"));

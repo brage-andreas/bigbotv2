@@ -29,8 +29,8 @@ module.exports.run = async (message, args) => {
         if (user) messages = messages.filter(msg => msg.author.id === user.id);
         channel.bulkDelete(messages)
         .then(msgs => {
-            if (user) botLog(chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages limited to} ${user.tag} {grey (${user.id})}`);
-            else      botLog(chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages}`);
+            if (user) botLog(client.user.id, chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages limited to} ${user.tag} {grey (${user.id})}`);
+            else      botLog(client.user.id, chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages}`);
         })
         .catch(err => console.log(err.stack));
     });

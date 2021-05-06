@@ -49,6 +49,6 @@ module.exports.run = async (message, args) => {
 		}
 	});
 
-    type ? botLog(chalk `{grey Used} SETACTIVITY {grey to set a new activity, with type:} ${type}`)
-         : botLog(chalk `{grey Used} SETACTIVITY {grey to reset}`);
+    type ? botLog(client.user.id, chalk `{grey Used} SETACTIVITY {grey to set a new activity, with type:} ${type}`)
+         : botLog(client.user.id, chalk `{grey Used} SETACTIVITY {grey to reset}`);
 }
