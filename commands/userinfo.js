@@ -1,5 +1,7 @@
 const chalk = require("chalk");
-const { getColours, emoji, botLog } = require("../files/auto.js");
+const nickSchema = require("../files/mongoSchemes/nick-schema.js");
+const { MessageEmbed } = require("discord.js");
+const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
@@ -7,14 +9,14 @@ module.exports = {
 	name: ["userinfo", "memberinfo"],
 	use: "userinfo @user|userID",
 	about: "Sender diverse informasjon om en bruker.",
-	category: "management|fun|info|support"
+	category: "info"
 }
 
 // --------------------------------------------------------------
 
 module.exports.run = async (message, args) => {
-	const { client, mentions, guild } = message;
-    const { embedURL } = await getColours(client.user.id);
+	const { client, mentions, guild, channel } = message;
+    const { embedURL } = await config(client.user.id);
 
     if (!args.length) return message.react(emoji(client, "err"));
 
@@ -22,6 +24,41 @@ module.exports.run = async (message, args) => {
     const user   = member?.user;
 
     if (!member) return message.react(emoji(client, "err"));
+
+    const [made, came] = parseCreatedJoinedAt(user.createdAt, member.joinedAt);
+    const roles = Array.from(member.roles.cache.filter(r => r.name !== "@everyone").values());
+
+    const rawNicks = await mongo().then(async mongoose => {
+        try { return await nickSchema.findOne({ _id: user.id }); }
+        finally { mongoose.connection.close(); }
+    });
+    const nicks = rawNicks.names;
+
+    const status = member.presence.status === "online" ? "🟩 Online"         :
+                      member.presence.status === "idle"   ? "🟨 Idle"           :
+                      member.presence.status === "dnd"    ? "🟥 Do Not Disturb" :
+                                                            "⬛ Offline";
+
+    const avatar = user.displayAvatarURL({ format: "png", dynamic: true, size: 1024 });
+
+    const infoEmbed = new MessageEmbed()
+    .setColor(member.displayHexColor !== "#000000" ? member.displayHexColor : "RANDOM")
+    .setThumbnail(avatar)
+    .setTitle(member.displayName)
+    .setURL(embedURL)
+    .addField("Brukernavn", `${user.tag}`, true)
+    .addField("Avatar", `[Link](${avatar})`, true)
+    .addField("ID", `\`${user.id}\``)
+    .addField("Bruker laget", made, true)
+    .addField(`Kom til ${guild.name}`, came, true)
+    .addField("Status", `${status}`)
+    .setTimestamp();
+
+    if (roles.length) infoEmbed.addField("Roller", roles.join(", "))
+    if (nicks.length && guild.id === "486548195137290265") infoEmbed.addField("Navn", `"${nicks.reverse().join('"\n"')}"`);
+    if (guild.ownerID === user.id) infoEmbed.setDescription(`👑 Eieren av serveren`);
+
+    channel.send(infoEmbed);
 
     botLog(client.user.id, chalk `{grey Used} USERINFO {grey on} ${user.tag} {grey ${user.id}}`);
 }

@@ -1,11 +1,11 @@
 const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
-const { emoji, config, colours, botLog } = require("../files/auto.js");
+const { emoji, config, getColours, botLog } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["activities", "activity", "acts", "status"],
+	name: ["activities", "activity", "acts", "status", "presence"],
 	use: "activities @user|userID",
 	about: "Sender hva brukeren gjør",
 	category: "info"
@@ -15,8 +15,8 @@ module.exports = {
 
 module.exports.run = async (message, args) => {
 	const { mentions, guild, member, client, channel } = message;
-    const { embedURL } = await config("465490885417762827");
-    const { yellow } = colours;
+    const { embedURL } = await config(client.user.id);
+    const { yellow } = await getColours(client.user.id);
 
     let guildMember = mentions.members.first() || guild.members.cache.get(args[0]);
     if (!guildMember && !args.length) guildMember = member;
@@ -30,7 +30,7 @@ module.exports.run = async (message, args) => {
     const strStatus = status === "online" ? "🟩 Online"         :
                       status === "idle"   ? "🟨 Idle"           :
                       status === "dnd"    ? "🟥 Do Not Disturb" :
-                      "⬛ Offline";
+                                            "⬛ Offline";
 
     const actEmbed = new MessageEmbed()
     .setTitle(!name.endsWith("s") && !name.endsWith("z") ? `${name}s aktiviteter` : `${name}' aktiviteter`)
