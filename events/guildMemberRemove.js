@@ -8,7 +8,7 @@ module.exports = { name: "guildMemberRemove" }
 
 // --------------------------------------------------------------
 
-module.exports.run = async (member) => {
+module.exports.run = async (client, member) => {
 
     const { red } = colours;
     const { user, guild } = member;

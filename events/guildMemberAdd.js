@@ -8,7 +8,7 @@ module.exports = { name: "guildMemberAdd" }
 
 // --------------------------------------------------------------
 
-module.exports.run = async (member) => {
+module.exports.run = async (client, member) => {
 
     const clientID = member.guild.me.user.id;
     const { guild, user } = member;
