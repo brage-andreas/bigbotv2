@@ -23,8 +23,8 @@ module.exports.run = async (message, args) => {
 
     const member = mentions.members.first() || guild.members.cache.get(args[0]);
 
-    const subject = serverQuery ? "g" : member ? "m" : !args.length ? "a" : null;
-    if (!subject) return message.react(emoji(client, "err"));
+    const subject = serverQuery ? "g" : member ? "m" : null;
+    if (!subject && args.length) return message.react(emoji(client, "err"));
 
     const name   = subject === "g" ? guild.name : subject === "m" ? member.displayName : author.tag;
     const avatar = subject === "g" ? guild.iconURL(imgOptions) : subject === "m" ? member.user.displayAvatarURL(imgOptions) : author.displayAvatarURL(imgOptions);
