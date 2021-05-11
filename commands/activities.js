@@ -20,11 +20,11 @@ module.exports.run = async (message, args) => {
 
     const getStatus = (s) => s === "online" ? "🟩 Online" : s === "idle" ? "🟨 Idle" : s === "dnd" ? "🟥 Do Not Disturb" : "⬛ Offline";
 
-    let guildMember = mentions.members.first() || guild.members.cache.get(args[0]) || member;
+    const guildMember = mentions.members.first() || guild.members.cache.get(args[0]) || member;
 
     if (!guildMember) return message.react(emoji(client, "err"));
 
-    let filters = [];
+    const filters = [];
     if (args.join(" ").includes("-")) {
         args.forEach(arg => {
             if (arg === "-playing"   || arg === "-p") filters.push("PLAYING");       else

@@ -15,7 +15,7 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = async (message, args) => {
-    const { mentions, guild, client, channel } = message;
+    const { mentions, guild, author, client, channel } = message;
 
     const quoteText = (ctx, text, x, y, maxWidth, lineHeight) => {
         let str = text.split("\n");
@@ -49,17 +49,14 @@ module.exports.run = async (message, args) => {
         return ctx.font;
     }
 
-    const mentionArg = args.shift();
-    const regxp = /(^<@!?(\d{17,19})>$)|(^(\d{17,19})?$)/;
+    const memberRaw = mentions.members.first() || guild.members.cache.get(args[0]);
 
-    if (!regxp.test(mentionArg.trim())) return message.react(emoji(client, "err"));
+    if (memberRaw) args.shift();
+    const member    = memberRaw?.displayName || message.member.displayName;
+    const avatarRaw = memberRaw?.user.displayAvatarURL({ format: "png", size: 1024 }) || author.displayAvatarURL({ format: "png", size: 1024 });
     
-    const memberRaw = mentions.members.first() || guild.members.cache.get(mentionArg);
-    const member    = memberRaw?.displayName;
-    const avatarRaw = memberRaw?.user.displayAvatarURL({ format: "png", size: 1024 }) 
-
-    if (!member)      return message.react(emoji(client, "err"));
     if (!args.length) return message.react(emoji(client, "err"));
+    if (!member)       return message.react(emoji(client, "err"));
 
 
     // -- Creating the canvas ----------------------------------
@@ -100,5 +97,5 @@ module.exports.run = async (message, args) => {
     message.delete();
     channel.send(attachment);
 
-    botLog(client.user.id, chalk `{grey Used} QUOTE {grey on} ${memberRaw.user.tag} {grey (${memberRaw.user.id})}`);
+    botLog(client.user.id, chalk `{grey Used} QUOTE {grey on} ${memberRaw?.user.tag || author.tag} {grey (${memberRaw?.user.id || author.id})}`);
 }

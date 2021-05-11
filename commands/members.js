@@ -16,7 +16,7 @@ module.exports.run = async (message, args) => {
     const { embedURL } = await config("465490885417762827");
     const { yellow } = await getColours(client.user.id);
 
-    const role = mentions.roles.size ? mentions.roles.first() : guild.roles.cache.get(args[0]);
+    const role = mentions.roles.first() || guild.roles.cache.get(args[0]);
     if (!role) return message.react(emoji(client, "err"));
 
     const members = role.members
