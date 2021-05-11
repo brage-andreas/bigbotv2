@@ -17,8 +17,8 @@ module.exports = {
 module.exports.run = async (message, args) => {
 	const { guild, client, channel, member, author } = message;
     const { embedURL } = await config(client.user.id);
-    const { yellow } = await getColours(client.user.id);
-    const prefix = "?"
+    const { yellow }   = await getColours(client.user.id);
+    const prefix       = "?"
 
     const getI = (i) => i+1 <10 ? String("0"+(i+1)) : String(i+1); 
     const getName = (array) => {
@@ -26,7 +26,7 @@ module.exports.run = async (message, args) => {
         return aliases.length ? `${array[0]} (${aliases.join(", ")})` : `${array[0]}`;
     }
 
-    const formatCmds = (commands) => commands.array().map((cmd, i) => `\`${getI(i)}\` ${getName(cmd.name)}`).join("\n");
+    const formatCmds = (commands)           => commands.array().map((cmd, i) => `\`${getI(i)}\` ${getName(cmd.name)}`).join("\n");
     const getCmds    = (commands, category) => commands.filter(command => command.category.toLowerCase() === category.toLowerCase());
 
     const all = args[0] === "-all";
@@ -45,20 +45,21 @@ module.exports.run = async (message, args) => {
 
         const commandsEmbed = new MessageEmbed()
         .setColor(yellow)
-        .setTitle(`iol i ${guild.name}`)
+        .setTitle(`komanndoer i ${guild.name}`)
         .setURL(embedURL)
         .setTimestamp();
 
         if (all) {
-            commandsEmbed.addField("iol", cmds.all);
+            commandsEmbed.addField("yeah, dats rgith", cmds.all);
         } else {
             if (cmds.man.size)  commandsEmbed.addField("karen da #managre", formatCmds(cmds.man));
             if (cmds.fun.size)  commandsEmbed.addField("moro", formatCmds(cmds.fun));
-            if (cmds.info.size) commandsEmbed.addField("info", formatCmds(cmds.info));
+            if (cmds.info.size) commandsEmbed.addField("ehh #stalker much ROFL", formatCmds(cmds.info));
             if (cmds.sup.size)  commandsEmbed.addField("jelp", formatCmds(cmds.sup));
         }
 
-        commandsEmbed.addField("eekers poppern", `Prøv \`${prefix}help kommando\` for mer hjølp`)
+        if (!commandsEmbed.fields.length) return channel.send("Det er ingen oop~");
+        commandsEmbed.addField("eekers poppern", `Prøv \`${prefix}help kommando\` for mer hjølp`);
 
         channel.send(commandsEmbed);
     }
