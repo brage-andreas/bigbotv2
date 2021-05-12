@@ -57,7 +57,7 @@ module.exports.run = async (message, args) => {
     
     if (!filteredActivities.length && !actEmbed.fields.length) actEmbed.setDescription("Ingenting smh");
     else filteredActivities.forEach(act => {
-        const { type, assets, emoji, state, details, name } = act;
+        const { type, assets, emoji, state, timestamps, details, name } = act;
 
         const title = type === "PLAYING"       ? "Spiller"  :
                       type === "STREAMING"     ? "Streamer" :
@@ -70,7 +70,10 @@ module.exports.run = async (message, args) => {
 
         switch (type) {
             case "CUSTOM_STATUS":
-                emoji ? content = `${emoji.name} ${state}` : state
+                const now = Date.now();
+                const { start, end } = timestamps, time;
+                if (start && end) time = `Startet `
+                content = emoji ? `${emoji.name} ${state}` : state
                 break;
             
             case "LISTENING":
@@ -79,8 +82,9 @@ module.exports.run = async (message, args) => {
                 break;
     
             case "PLAYING":
+                console.log(act);
                 if (details) {
-                    const base = state ? `${name}\n${details} - ${state}` : details;
+                    const base = `${name}\n${details ? details : ""}${state ? " - "+state : ""}`;
                     content = assets?.largeText ? `${base} som **${assets.largeText}**` : base;
                 }
     

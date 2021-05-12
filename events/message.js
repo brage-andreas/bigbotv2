@@ -34,6 +34,8 @@ module.exports.run = async (client, message) => {
 
     if (author.bot) return;
 
+    if (content === "prefix") return message.channel.send(`**Prefix**: \`${prefix}\`\n\n\`${prefix}help\` for kommandoer`);
+
 
 	const args = content.slice(prefix.length).trim().split(/\s+/g);
 	const commandname = args.shift().toLowerCase();

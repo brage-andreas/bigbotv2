@@ -142,18 +142,18 @@ const parseCreatedJoinedAt = (created, joined) => {
     if (!created && !joined) return null;
 
     const getTime = (tm) => {
+        let month  = (tm.getMonth()+1).zero();
         let year   =  tm.getFullYear().zero();
         let minute =  tm.getMinutes() .zero();
-        let month  = (tm.getMonth()+1).zero();
         let hour   =  tm.getHours()   .zero();
         let dato   =  tm.getDate()    .zero();
 
         let made = [`\`${year}-${month}-${dato} ${hour}:${minute}\``];
 
-        let minsAgo  = (date-tm)/60000;
-        let hoursAgo = (date-tm)/3600000;
-        let daysAgo  = (date-tm)/86400000;
-        let yearsAgo = (date-tm)/31536000000;
+        let minsAgo  = (date-tm)/60000;       // * 1000 * 60
+        let hoursAgo = (date-tm)/3600000;     // * 1000 * 60 * 60
+        let daysAgo  = (date-tm)/86400000;    // * 1000 * 60 * 60 * 24
+        let yearsAgo = (date-tm)/31536000000; // * 1000 * 60 * 60 * 24 * 365
         
         if (minsAgo <1) made.push("Under ett minutt siden");               else
         if (hoursAgo<1) made.push(`${Math.ceil(minsAgo)} minutter siden`); else
