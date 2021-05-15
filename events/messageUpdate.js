@@ -1,4 +1,5 @@
-const msgEvent = require("./message.js");
+require("module-alias/register");
+const msgEvent = require("@events/message.js");
 
 // --------------------------------------------------------------
 

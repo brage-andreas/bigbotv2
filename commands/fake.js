@@ -1,4 +1,5 @@
-const { config, emoji } = require("../files/auto.js");
+require("module-alias/register");
+const { config, emoji } = require("@auto");
 
 // --------------------------------------------------------------
 

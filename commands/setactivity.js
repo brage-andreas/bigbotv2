@@ -1,7 +1,7 @@
-const chalk        = require("chalk");
-const configSchema = require("../files/mongoSchemes/config-schema.js");
-
-const { config, emoji, botLog } = require("../files/auto.js");
+require("module-alias/register");
+const chalk = require("chalk");
+const configSchema = require("@schemas/config-schema.js");
+const { config, emoji, botLog } = require("@auto");
 
 // --------------------------------------------------------------
 

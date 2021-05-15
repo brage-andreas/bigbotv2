@@ -1,7 +1,8 @@
+require("module-alias/register");
 const chalk = require("chalk");
 const Canvas = require("canvas");
 const { MessageAttachment } = require("discord.js");
-const { emoji, botLog } = require("../files/auto.js");
+const { emoji, botLog } = require("@auto");
 
 // --------------------------------------------------------------
 

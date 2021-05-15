@@ -1,5 +1,6 @@
+require("module-alias/register");
 const chalk = require("chalk");
-const { mongo, getColours, config, time } = require("../files/auto");
+const { mongo, getColours, config, time } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = { name: "ready" }

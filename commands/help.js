@@ -1,7 +1,7 @@
-const chalk            = require("chalk");
+require("module-alias/register");
+const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
-
-const { config, botLog, getColours, emoji } = require("../files/auto.js");
+const { config, botLog, getColours, emoji } = require("@auto");
 
 // --------------------------------------------------------------
 

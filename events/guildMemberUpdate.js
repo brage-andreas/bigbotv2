@@ -1,6 +1,7 @@
-const chalk             = require("chalk");
-const nickSchema        = require("../files/mongoSchemes/nick-schema.js");
-const { botLog } = require("../files/auto.js");
+require("module-alias/register");
+const chalk      = require("chalk");
+const nickSchema = require("@schemas/nick-schema.js");
+const { botLog } = require("@auto");
 
 // --------------------------------------------------------------
 

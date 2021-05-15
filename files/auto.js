@@ -1,9 +1,9 @@
-const { yellow, red, green } = require("chalk");
+require("module-alias/register");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
 
-const configSchema = require("./mongoSchemes/config-schema.js");
-const { mPath } = require("./settings.json");
+const configSchema = require("@schemas/config-schema.js");
+const { mPath } = require("@files/settings.json");
 
 
 
@@ -30,7 +30,7 @@ const config = async (id) => await configSchema.findOne({ _id: id });
 
 
 /**
- * @returns [sec, min, hour]
+ * @returns sec, min, hour
  */
 const time = () => {
     const nil = (num) => num<10 ? String("0"+num) : String(num);

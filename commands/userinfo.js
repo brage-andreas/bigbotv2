@@ -1,7 +1,8 @@
+require("module-alias/register");
 const chalk = require("chalk");
-const nickSchema = require("../files/mongoSchemes/nick-schema.js");
+const nickSchema = require("@schemas/nick-schema.js");
 const { MessageEmbed } = require("discord.js");
-const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("../files/auto.js");
+const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("@auto");
 
 // --------------------------------------------------------------
 

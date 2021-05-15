@@ -1,5 +1,6 @@
+require("module-alias/register");
 const chalk = require("chalk");
-const { config, botLog, emoji } = require("../files/auto.js");
+const { config, botLog, emoji } = require("@auto");
 
 // --------------------------------------------------------------
 

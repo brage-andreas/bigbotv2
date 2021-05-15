@@ -1,6 +1,7 @@
+require("module-alias/register");
 const chalk = require("chalk");
 const { MessageEmbed } = require("discord.js");
-const { config, emoji, botLog, getColours } = require("../files/auto.js");
+const { config, emoji, botLog, getColours } = require("@auto");
 
 module.exports = {
 	name: ["members", "users"],
