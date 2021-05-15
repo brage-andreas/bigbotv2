@@ -47,7 +47,7 @@ module.exports.run = async (message, args) => {
     .setTitle(!name.endsWith("s") && !name.endsWith("z") ? `${name}s aktiviteter` : `${name}' aktiviteter`)
     .setColor(yellow)
     .setURL(embedURL)
-    .setTimestamp()
+    .setTimestamp();
 
     
     if (!filters.length || filters?.some(filter => filter === "STATUS")) actEmbed.addField("Status", getStatus(status));
@@ -70,9 +70,6 @@ module.exports.run = async (message, args) => {
 
         switch (type) {
             case "CUSTOM_STATUS":
-                const now = Date.now();
-                const { start, end } = timestamps, time;
-                if (start && end) time = `Startet `
                 content = emoji ? `${emoji.name} ${state}` : state
                 break;
             
@@ -82,7 +79,6 @@ module.exports.run = async (message, args) => {
                 break;
     
             case "PLAYING":
-                console.log(act);
                 if (details) {
                     const base = `${name}\n${details ? details : ""}${state ? " - "+state : ""}`;
                     content = assets?.largeText ? `${base} som **${assets.largeText}**` : base;

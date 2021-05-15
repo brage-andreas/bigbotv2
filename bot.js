@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const chalk   = require("chalk");
 const fs      = require("fs");
+const { token } = require("./files/settings.json");
 
 // --------------------------------------------------------------
 
@@ -8,7 +9,6 @@ const yellow = "hex('#FFC152')";
 const client = new Discord.Client({
 	ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILDS', 'GUILD_MESSAGES'] }
 });
-const { token } = require("./files/settings.json");
 
 client.commands  = new Discord.Collection();
 

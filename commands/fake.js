@@ -12,7 +12,7 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = async (message, args) => {
-    const { client } = message;
+    const { client, member } = message;
     const { admins } = await config(client.user.id);
 
     if (!admins.some(adm => message.author.id === adm)) return message.react(emoji(client, "adm"));
@@ -20,8 +20,8 @@ module.exports.run = async (message, args) => {
     const memberAdd    = require("../events/guildMemberAdd.js");
     const memberRemove = require("../events/guildMemberRemove.js");
 
-    if (args[0] === "join" ) return memberAdd   .run(message.member);
-    if (args[0] === "leave") return memberRemove.run(message.member);
+    if (args[0] === "join" ) return memberAdd   .run(member);
+    if (args[0] === "leave") return memberRemove.run(member);
     
     message.react(emoji(client, "err"));
 }

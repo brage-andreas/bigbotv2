@@ -1,7 +1,7 @@
 const chalk        = require("chalk");
 const configSchema = require("../files/mongoSchemes/config-schema.js");
 
-const { config, emoji, mongo, botLog } = require("../files/auto.js");
+const { config, emoji, botLog } = require("../files/auto.js");
 
 // --------------------------------------------------------------
 
@@ -21,9 +21,9 @@ module.exports.run = async (message, args) => {
     if (!admins.some(adm => message.author.id === adm)) return message.react(emoji(client, "adm"));
 
     const getType = argument => {
-        if (["PLAYING",   "P"].some(e => e === argument?.toUpperCase())) { args.shift(); return "PLAYING";   }
-        if (["WATCHING",  "W"].some(e => e === argument?.toUpperCase())) { args.shift(); return "WATCHING";  }
-        if (["LISTENING", "L"].some(e => e === argument?.toUpperCase())) { args.shift(); return "LISTENING"; }
+        if (["PLAYING",   "P"].some(e => e === argument?.toUpperCase())) { args.shift(); return "PLAYING";   } else 
+        if (["WATCHING",  "W"].some(e => e === argument?.toUpperCase())) { args.shift(); return "WATCHING";  } else
+        if (["LISTENING", "L"].some(e => e === argument?.toUpperCase())) { args.shift(); return "LISTENING"; } else
         return "WATCHING";
     }
 
@@ -34,21 +34,16 @@ module.exports.run = async (message, args) => {
 	.then(message.react(emoji(client, "check")))
     .catch(console.error);
 
-    await mongo().then(async mongoose => {
-		try {
-			await configSchema.findOneAndUpdate(
-				{ _id: client.user.id },
-				{
-					activity: activity,
-					activitytype: type
-				},
-				{ upsert: true }
-			);
-		} finally {
-			mongoose.connection.close();
-		}
-	});
 
-    type ? botLog(client.user.id, chalk `{grey Used} SETACTIVITY {grey to set a new activity, with type:} ${type}`)
-         : botLog(client.user.id, chalk `{grey Used} SETACTIVITY {grey to reset}`);
+    await configSchema.findOneAndUpdate(
+        { _id: client.user.id },
+        {
+            activity: activity,
+            activitytype: type
+        },
+        { upsert: true }
+    );
+
+    const logcontent = type ? "to set a new activity with type:" : "to reset";
+    botLog(client.user.id, chalk `{grey Used} SETACTIVITY {grey ${logcontent}} ${type}`)
 }

@@ -12,24 +12,16 @@ const { mPath } = require("./settings.json");
 
 
 const mongo = async () => {
-    const options = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
-    await mongoose.connect(mPath, options);
+    await mongoose.connect(mPath, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        keepAlive: true
+    });
     return mongoose;
 }
 
-const config = async (id) => {
-    let data;
-    await mongo().then(async mongoose => {
-        try {
-            data = await configSchema.findOne({ _id: id });
-        }
-        
-        finally {
-            mongoose.connection.close();
-        }
-    });
-    return data;
-}
+const config = async (id) => await configSchema.findOne({ _id: id });
 
 
 

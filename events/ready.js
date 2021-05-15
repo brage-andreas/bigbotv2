@@ -1,6 +1,5 @@
 const chalk = require("chalk");
-const { getColours, config, time } = require("../files/auto");
-
+const { mongo, getColours, config, time } = require("../files/auto");
 // --------------------------------------------------------------
 
 module.exports = { name: "ready" }
@@ -8,11 +7,12 @@ module.exports = { name: "ready" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client) => {
+    await mongo();
     const { activity, activitytype } = await config(client.user.id);
     const { yellow, green }          = await getColours(client.user.id, true);
 	const { user, guilds, channels } = client;
     const [sec, min, hour]           = time();
-
+    
 	user.setActivity(activity, { type: activitytype }).catch(console.error);
 	
     console.log(chalk `{${yellow} ┌────────────────────┐}`)
