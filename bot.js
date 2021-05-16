@@ -35,7 +35,7 @@ const logo = `
            ==@@@@@@@@@@@==
 \n\n`;
 process.stdout.write("\033c");
-console.log(logo);
+console.log(chalk `{${yellow} ${logo}}`);
 
 
 const getJsFiles = async (dir) => {
@@ -51,7 +51,7 @@ getJsFiles("./commands/").then(commandFiles => {
 		const command = require(`@cmds/${file}`);
 		client.commands.set(command.name, command);
 	});
-    console.log("                 Done!\n\n");
+    console.log("Done!\n\n");
 });
 
 

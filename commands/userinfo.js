@@ -8,7 +8,7 @@ const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("@auto");
 
 module.exports = {
 	name: ["userinfo", "memberinfo"],
-	use: "userinfo @user|userID",
+	use: "userinfo <@user|userID>",
 	about: "Sender diverse informasjon om en bruker.",
 	category: "info"
 }
@@ -19,9 +19,7 @@ module.exports.run = async (message, args) => {
 	const { client, mentions, guild, channel } = message;
     const { embedURL } = await config(client.user.id);
 
-    if (!args.length) return message.react(emoji(client, "err"));
-
-    const member = mentions.members.first() || guild.members.cache.get(args[0]);
+    const member = mentions.members.first() || guild.members.cache.get(args[0]) || message.member;
     const user   = member?.user;
 
     if (!member) return message.react(emoji(client, "err"));
@@ -36,9 +34,9 @@ module.exports.run = async (message, args) => {
     const nicks = rawNicks.names;
 
     const status = member.presence.status === "online" ? "🟩 Online"         :
-                      member.presence.status === "idle"   ? "🟨 Idle"           :
-                      member.presence.status === "dnd"    ? "🟥 Do Not Disturb" :
-                                                            "⬛ Offline";
+                   member.presence.status === "idle"   ? "🟨 Idle"           :
+                   member.presence.status === "dnd"    ? "🟥 Do Not Disturb" :
+                                                         "⬛ Offline";
 
     const avatar = user.displayAvatarURL({ format: "png", dynamic: true, size: 1024 });
 
