@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const configSchema = require("@schemas/config-schema.js");
 const { mPath }    = require("@files/settings.json");
 
+const twoCharLength = (num) => num<10 ? String("0"+num) : String(num);
+
 
 
 // --------------------------------------------------------------
@@ -31,15 +33,14 @@ const config = async (id) => await configSchema.findOne({ _id: id });
 
 
 /**
- * @returns sec, min, hour
+ * @returns sec, min, hour [ ]
  */
 const time = () => {
-    const twoCharLength = (num) => num<10 ? String("0"+num) : String(num);
     const now = new Date;
     
-    const sec  = Date.getSeconds();
-    const min  = Date.getMinutes();
-    const hour = Date.getHours();
+    const sec  = now.getSeconds();
+    const min  = now.getMinutes();
+    const hour = now.getHours();
     
     const secMinHourArray = [ twoCharLength(sec), twoCharLength(min), twoCharLength(hour) ];
     return secMinHourArray;
@@ -67,18 +68,13 @@ const emoji = (client, emoji) => {
 
 
 
-let colourObj = {};
 const getColours = async (id, format=false) => {
     // fix
     const chalkFormat = (str) => `hex("${str.replace("#", "")}")`; // hex("ff2233")
-    const addColoursToObj = (...colours) => colours.forEach(colour => colourObj[colour] = colour);
     
     // TODO: logikk for om yellow, red og green allerede finnes
     
-    //let { yellow, red, green } = await config(id);
-    let logTest = await config(id);
-    console.log(logTest);
-    let { yellow, red, green } = logTest;
+    let { yellow, red, green } = await config(id);
     
     if (format) {
         yellow = chalkFormat(yellow);
@@ -86,7 +82,11 @@ const getColours = async (id, format=false) => {
         red    = chalkFormat(red);
     }
     
-    addColoursToObj(yellow, green, red);
+    const colourObj = {
+        "yellow": yellow,
+        "green" : green,
+        "red"   : red
+    };
     
     return colourObj;
 }
@@ -152,42 +152,57 @@ const botLog = async (id, custom, guildName=null, channelName=null) => {
 
 
 const parseCreatedJoinedAt = (created, joined) => {
-    Number.prototype.zero = function() { return this<10 ? "0"+this : this };
     const date = new Date();
 
     if (!created && !joined) return null;
 
-    const getTime = (tm) => {
-        let month  = (tm.getMonth()+1).zero();
-        let minute =  tm.getMinutes() .zero();
-        let hour   =  tm.getHours()   .zero();
-        let dato   =  tm.getDate()    .zero();
-        let year   =  tm.getFullYear();
+    const getTime = (time) => {
+        const month  = (time.getMonth()+1).twoCharLength();
+        const minute =  time.getMinutes() .twoCharLength();
+        const hour   =  time.getHours()   .twoCharLength();
+        const dato   =  time.getDate()    .twoCharLength();
+        const year   =  time.getFullYear();
 
-        let made = [`\`${year}-${month}-${dato} ${hour}:${minute}\``];
-
-        let minsAgo  = (date-tm)/60000;       // * 1000 * 60
-        let hoursAgo = (date-tm)/3600000;     // * 1000 * 60 * 60
-        let daysAgo  = (date-tm)/86400000;    // * 1000 * 60 * 60 * 24
-        let yearsAgo = (date-tm)/31536000000; // * 1000 * 60 * 60 * 24 * 365
-        
-        if (minsAgo <1) made.push("Under ett minutt siden");               else
-        if (hoursAgo<1) made.push(`${Math.ceil(minsAgo)} minutter siden`); else
-        if (daysAgo <1) made.push(`${Math.ceil(hoursAgo)} timer siden`);   else
-        if (yearsAgo<1) made.push(`${Math.ceil(daysAgo)} dager siden`);
-                   else made.push(`${yearsAgo.toFixed(1).replace(".", ",")} år siden`);
-
-        return made.join("\n");
+        return `\`${year}-${month}-${dato} ${hour}:${minute}\``;
     }
 
-    let fMade, fCame;
-    if (created) fMade = getTime(created);
-    if (joined)  fCame = getTime(joined);
+    const getTimeSince = (time) => {
+        const minsAgo  = (date-time)/60000;       // * 1000 * 60
+        const hoursAgo = (date-time)/3600000;     // * 1000 * 60 * 60
+        const daysAgo  = (date-time)/86400000;    // * 1000 * 60 * 60 * 24
+        const yearsAgo = (date-time)/31536000000; // * 1000 * 60 * 60 * 24 * 365
 
-    if ( fMade &&  fCame) return [fMade, fCame]; else
-    if ( fMade && !fCame) return  fMade; else
-    if (!fMade &&  fCame) return  fCame;
-    else return null;
+        let returnStr;
+
+        if (minsAgo <1)      returnStr = "Under ett minutt siden";
+        else if (hoursAgo<1) returnStr = `${Math.ceil(minsAgo)} minutter siden`;
+        else if (daysAgo <1) returnStr = `${Math.ceil(hoursAgo)} timer siden`;
+        else if (yearsAgo<1) returnStr = `${Math.ceil(daysAgo)} dager siden`;
+        /* --------- */ else returnStr = `${yearsAgo.toFixed(1).replace(".", ",")} år siden`;
+
+        return returnStr;
+    }
+
+    let formattedMade, formattedCame;
+
+    if (created) {
+        let timeMade      = getTime(created);
+        let timeSinceMade = getTimeSince(created);
+
+        formattedMade = timeMade.concat(timeSinceMade).join("\n");
+    }
+
+    if (joined) {
+        let timeCame      = getTime(joined);
+        let timeSinceCame = getTimeSince(joined);
+
+        formattedCame = timeCame.concat(timeSinceCame).join("\n");
+    }
+
+    if (created && joined) return [formattedMade, formattedCame];
+    if (created) return formattedMade;
+    if (joined)  return formattedCame;
+    return null;
 }
 
 

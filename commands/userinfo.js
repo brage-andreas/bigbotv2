@@ -25,13 +25,10 @@ module.exports.run = async (message, args) => {
     if (!member) return message.react(emoji(client, "err"));
 
     const [made, came] = parseCreatedJoinedAt(user.createdAt, member.joinedAt);
-    const roles = Array.from(member.roles.cache.filter(r => r.name !== "@everyone").values());
+    const roles        = Array.from(member.roles.cache.filter(r => r.name !== "@everyone").values());
 
-    const rawNicks = await mongo().then(async mongoose => {
-        try { return await nickSchema.findOne({ _id: user.id }); }
-        finally { mongoose.connection.close(); }
-    });
-    const nicks = rawNicks.names;
+    await mongo();
+    const nicks    = await nickSchema.findOne({ _id: user.id })?.names;
 
     const status = member.presence.status === "online" ? "🟩 Online"         :
                    member.presence.status === "idle"   ? "🟨 Idle"           :
