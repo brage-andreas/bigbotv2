@@ -1,9 +1,9 @@
 require("module-alias/register");
-const chalk = require("chalk");
+const chalk    = require("chalk");
 const mongoose = require("mongoose");
 
 const configSchema = require("@schemas/config-schema.js");
-const { mPath } = require("@files/settings.json");
+const { mPath }    = require("@files/settings.json");
 
 
 
@@ -18,6 +18,7 @@ const mongo = async () => {
         useFindAndModify: false,
         keepAlive: true
     });
+    
     return mongoose;
 }
 
@@ -33,9 +34,15 @@ const config = async (id) => await configSchema.findOne({ _id: id });
  * @returns sec, min, hour
  */
 const time = () => {
-    const nil = (num) => num<10 ? String("0"+num) : String(num);
-    const date = new Date();
-    return [ nil(date.getSeconds()), nil(date.getMinutes()), nil(date.getHours()) ];
+    const twoCharLength = (num) => num<10 ? String("0"+num) : String(num);
+    const now = new Date;
+    
+    const sec  = Date.getSeconds();
+    const min  = Date.getMinutes();
+    const hour = Date.getHours();
+    
+    const secMinHourArray = [ twoCharLength(sec), twoCharLength(min), twoCharLength(hour) ];
+    return secMinHourArray;
 }
 
 
@@ -60,8 +67,14 @@ const emoji = (client, emoji) => {
 
 
 
+let colourObj = {};
 const getColours = async (id, format=false) => {
-    const chalkFormat = (str) => `hex("${str.replace("#", "")}")`;
+    // fix
+    const chalkFormat = (str) => `hex("${str.replace("#", "")}")`; // hex("ff2233")
+    const addColoursToObj = (...colours) => colours.forEach(colour => colourObj[colour] = colour);
+    
+    // TODO: logikk for om yellow, red og green allerede finnes
+    
     //let { yellow, red, green } = await config(id);
     let logTest = await config(id);
     console.log(logTest);
@@ -73,11 +86,7 @@ const getColours = async (id, format=false) => {
         red    = chalkFormat(red);
     }
     
-    const colourObj = {
-        yellow: yellow,
-        green : green,
-        red   : red
-    };
+    addColoursToObj(yellow, green, red);
     
     return colourObj;
 }
