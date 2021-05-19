@@ -34,7 +34,7 @@ module.exports.run = async (message, args) => {
 
     const made = parseCreatedJoinedAt(createdAt);
     
-    const oldestChannel      = (chs) => chs.sort((a,b) => a.createdTimestamp-b.createdTimestamp).first();
+    const oldestChannel      = (chl) => chl.sort((a,b) => a.createdTimestamp-b.createdTimestamp).first();
     const textChannels       = channels.cache.filter(c => c.type === "text");
     const voiceChannels      = channels.cache.filter(c => c.type === "voice");
     const oldestTextChannel  = oldestChannel(textChannels);
