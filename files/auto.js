@@ -159,10 +159,10 @@ const parseCreatedJoinedAt = (created, joined) => {
 
     const getTime = (tm) => {
         let month  = (tm.getMonth()+1).zero();
-        let year   =  tm.getFullYear().zero();
         let minute =  tm.getMinutes() .zero();
         let hour   =  tm.getHours()   .zero();
         let dato   =  tm.getDate()    .zero();
+        let year   =  tm.getFullYear();
 
         let made = [`\`${year}-${month}-${dato} ${hour}:${minute}\``];
 
