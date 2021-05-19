@@ -7,7 +7,7 @@ const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["userinfo", "memberinfo"],
+	name: ["userinfo", "memberinfo", "ui", "mi"],
 	use: "userinfo <@user|userID>",
 	about: "Sender diverse informasjon om en bruker.",
 	category: "info"
@@ -28,7 +28,7 @@ module.exports.run = async (message, args) => {
     const roles        = Array.from(member.roles.cache.filter(r => r.name !== "@everyone").values());
 
     await mongo();
-    const nicks    = await nickSchema.findOne({ _id: user.id })?.names;
+    const nicks = await nickSchema.findOne({ _id: user.id });
 
     const status = member.presence.status === "online" ? "🟩 Online"         :
                    member.presence.status === "idle"   ? "🟨 Idle"           :
@@ -51,7 +51,7 @@ module.exports.run = async (message, args) => {
     .setTimestamp();
 
     if (roles.length) infoEmbed.addField("Roller", roles.join(", "))
-    if (nicks.length && guild.id === "486548195137290265") infoEmbed.addField("Navn", `"${nicks.reverse().join('"\n"')}"`);
+    if (nicks?.names.length && guild.id === "486548195137290265") infoEmbed.addField("Navn", `"${nicks.names.reverse().join('"\n"')}"`);
     if (guild.ownerID === user.id) infoEmbed.setDescription(`👑 Eieren av serveren`);
 
     channel.send(infoEmbed);

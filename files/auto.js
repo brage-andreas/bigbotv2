@@ -157,11 +157,11 @@ const parseCreatedJoinedAt = (created, joined) => {
     if (!created && !joined) return null;
 
     const getTime = (time) => {
-        const month  = (time.getMonth()+1).twoCharLength();
-        const minute =  time.getMinutes() .twoCharLength();
-        const hour   =  time.getHours()   .twoCharLength();
-        const dato   =  time.getDate()    .twoCharLength();
-        const year   =  time.getFullYear();
+        const month  = twoCharLength(time.getMonth()+1 );
+        const minute = twoCharLength(time.getMinutes() );
+        const hour   = twoCharLength(time.getHours()   );
+        const dato   = twoCharLength(time.getDate()    );
+        const year   = twoCharLength(time.getFullYear());
 
         return `\`${year}-${month}-${dato} ${hour}:${minute}\``;
     }
@@ -189,14 +189,14 @@ const parseCreatedJoinedAt = (created, joined) => {
         let timeMade      = getTime(created);
         let timeSinceMade = getTimeSince(created);
 
-        formattedMade = timeMade.concat(timeSinceMade).join("\n");
+        formattedMade = `${timeMade}\n${timeSinceMade}`;
     }
 
     if (joined) {
         let timeCame      = getTime(joined);
         let timeSinceCame = getTimeSince(joined);
 
-        formattedCame = timeCame.concat(timeSinceCame).join("\n");
+        formattedCame = `${timeCame}\n${timeSinceCame}`;
     }
 
     if (created && joined) return [formattedMade, formattedCame];
