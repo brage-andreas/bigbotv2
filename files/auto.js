@@ -61,10 +61,25 @@ const emoji = (client, emoji) => {
 
 
 const getColours = async (id, format=false) => {
-    String.prototype.r = function() { return `hex("${this.replace("#", "")}")` }
-    let { yellow, red, green } = await config(id);
-
-    return format ? { yellow: yellow.r(), red: red.r(), green: green.r() } : { yellow: yellow, red: red, green: green };
+    const chalkFormat = (str) => `hex("${str.replace("#", "")}")`;
+    //let { yellow, red, green } = await config(id);
+    let logTest = await config(id);
+    console.log(logTest);
+    let { yellow, red, green } = logTest;
+    
+    if (format) {
+        yellow = chalkFormat(yellow);
+        green  = chalkFormat(green);
+        red    = chalkFormat(red);
+    }
+    
+    const colourObj = {
+        yellow: yellow,
+        green : green,
+        red   : red
+    };
+    
+    return colourObj;
 }
 
 
