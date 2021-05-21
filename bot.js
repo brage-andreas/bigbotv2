@@ -13,6 +13,8 @@ const client = new Discord.Client({
 client.commands = new Discord.Collection();
 
 
+process.stdout.write("\033c"); // clears terminal, console.clear() doesn't fully clear it
+
 const logo = `
                       BIG BOT
                       PROJECT
@@ -34,7 +36,6 @@ const logo = `
         =@@@@@@@@@@@@@@@@@@@=
            ==@@@@@@@@@@@==
 \n\n`;
-process.stdout.write("\033c");
 console.log(chalk `{${yellow} ${logo}}`);
 
 
