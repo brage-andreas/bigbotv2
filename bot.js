@@ -34,7 +34,7 @@ const logo = `
         =@@@@@@@@@@@@@@@@@@@=
            ==@@@@@@@@@@@==
 \n\n`;
-process.stdout.write("\033c");
+process.stdout.write("\033c"); // clears terminal, console.clear() doesn't fully clear it
 console.log(chalk `{${yellow} ${logo}}`);
 
 
@@ -49,6 +49,8 @@ getJsFiles("./commands/").then(commandFiles => {
     console.log(chalk `{grey Loading} {${yellow} ${commandFiles.length}} {grey commands •••}`);
 	commandFiles.forEach(file => {
 		const command = require(`@cmds/${file}`);
+        if (!command.name.length) return; // if file is empty
+
 		client.commands.set(command.name, command);
 	});
     console.log("Done!\n\n");

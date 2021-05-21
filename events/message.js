@@ -15,7 +15,7 @@ module.exports.run = async (client, message) => {
     const { raveyardID, raveyardTimer } = await config("465490885417762827");
     const { yellow } = await getColours(client.user.id, true);
 
-	const prefix = "?";
+	const prefix = "?"; // TODO: add dynamic, per-server prefix with mongo
 
 
 	if (channel.type === "DM" || author.id === client.user.id) return;
@@ -38,14 +38,14 @@ module.exports.run = async (client, message) => {
     if (content === "prefix") return message.channel.send(`**Prefix**: \`${prefix}\`\n\n\`${prefix}help\` for kommandoer`);
 
 
-	const args = content.slice(prefix.length).trim().split(/\s+/g);
-	const commandname = args.shift().toLowerCase();
+	const args    = content.slice(prefix.length).trim().split(/\s+/g);
+	const cmdname = args.shift().toLowerCase();
 
 
 	if (!content.startsWith(prefix)) return;
 
-	const command = commands.find(command => command.name.some(name => name === commandname));
+	const command = commands.find(command => command.name.some(name => name === cmdname));
 
     if (command) command.run(message, args);
-    else if (commandname.replace(/\?+/g, "")) message.react(emoji(client, "questionmark"));
+    else if (cmdname.replace(/\?+/g, "")) message.react(emoji(client, "questionmark"));
 }
