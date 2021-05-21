@@ -5,7 +5,7 @@ const { emoji, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["react", "r"],
+	names: ["react", "r"],
 	use: "react <messageID> emojis",
 	about: "Reagerer til en melding. Støtter alle emojier innebygd i Discord, pluss \"adm\", \"err\", \"questionmark\", \"time\" og \"check\"",
 	category: "fun"

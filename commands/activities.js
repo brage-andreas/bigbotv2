@@ -6,7 +6,7 @@ const { emoji, config, getColours, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["activities", "activity", "acts", "status", "presence"],
+	names: ["activities", "activity", "acts", "status", "presence"],
 	use: "activities @user|userID <-type ...>",
 	about: 'Sender hva brukeren gjør. Typer kan være "__p__laying", "__w__atching", "__s__treaming", "__l__istening", "__c__ustom", "competing" og/eller "status".',
 	category: "info"

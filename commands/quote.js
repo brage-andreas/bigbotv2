@@ -7,7 +7,7 @@ const { emoji, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["quote", "q"],
+	names: ["quote", "q"],
 	use: "quote <@user|userID> tekst",
 	about: "Sitér noen",
 	category: "fun"

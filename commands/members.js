@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js");
 const { config, emoji, botLog, getColours } = require("@auto");
 
 module.exports = {
-	name: ["members", "users"],
+	names: ["members", "users"],
 	use: "members @role|roleID",
 	about: "Sender alle i en spesifisert rolle",
 	category: "info"

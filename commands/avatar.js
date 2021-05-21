@@ -6,7 +6,7 @@ const { config, getColours, emoji, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["avatar", "av", "profilepic", "pfp"],
+	names: ["avatar", "av", "profilepic", "pfp"],
 	use: "avatar <@user|userID|(server|guild|s)>",
 	about: "send dinna bildin",
 	category: "info"

@@ -6,7 +6,7 @@ const { config, botLog, getColours, emoji } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["help", "h", "commands", "cmds"],
+	names: ["help", "h", "commands", "cmds"],
 	use: "help <kommando|-all>",
 	about: "Sender ei liste over alle kommandoer, eller info om en som er spesifisert",
 	category: "support"

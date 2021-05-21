@@ -5,7 +5,7 @@ const { config, botLog, emoji } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["prune", "purge", "p"],
+	names: ["prune", "purge", "p"],
 	use: "prune x <@user|userID> <@channel|channelID>",
 	about: "Sletter x antall meldinger.",
 	category: "management"

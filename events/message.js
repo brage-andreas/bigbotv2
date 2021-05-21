@@ -44,7 +44,7 @@ module.exports.run = async (client, message) => {
 
 	if (!content.startsWith(prefix)) return;
 
-	const command = commands.find(command => command.name.some(name => name === commandname));
+	const command = commands.find(command => command.names.some(name => name === commandname));
 
     if (command) command.run(message, args);
     else if (commandname.replace(/\?+/g, "")) message.react(emoji(client, "questionmark"));

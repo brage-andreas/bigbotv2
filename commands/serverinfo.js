@@ -6,7 +6,7 @@ const { config, getColours, emoji, parseCreatedJoinedAt, botLog } = require("@au
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["serverinfo", "si"],
+	names: ["serverinfo", "si"],
 	use: "serverinfo <serverID>",
 	about: "sender masse ræl om en server",
 	category: "management|fun|info|support"

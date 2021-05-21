@@ -4,7 +4,7 @@ const { config, emoji } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-    name: ["fake"],
+    names: ["fake"],
 	use: "fake join|leave",
 	about: "fake",
 	category: "management"

@@ -6,7 +6,7 @@ const { config, emoji, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["setactivity", "sa"],
+	names: ["setactivity", "sa"],
 	use: "setactivity type aktivitet",
 	about: "Få BIG BOT til å gjøre noe. Typer er \"playing\" (p), \"watching\" (w) og \"listening\" (l).",
 	category: "management"

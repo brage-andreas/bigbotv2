@@ -49,7 +49,7 @@ getJsFiles("./commands/").then(commandFiles => {
     console.log(chalk `{grey Loading} {${yellow} ${commandFiles.length}} {grey commands •••}`);
 	commandFiles.forEach(file => {
 		const command = require(`@cmds/${file}`);
-		client.commands.set(command.name, command);
+		client.commands.set(command.names, command);
 	});
     console.log("Done!\n\n");
 });

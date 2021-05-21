@@ -7,7 +7,7 @@ const { config, emoji, parseCreatedJoinedAt, mongo, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["userinfo", "memberinfo", "ui", "mi"],
+	names: ["userinfo", "memberinfo", "ui", "mi"],
 	use: "userinfo <@user|userID>",
 	about: "Sender diverse informasjon om en bruker.",
 	category: "info"

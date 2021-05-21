@@ -5,7 +5,7 @@ const { config, emoji, botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["new"],
+	names: ["new"],
 	use: "new channel[-name navn -parent parentID topic]",
 	about: "lag ny XD",
 	category: "management"

@@ -5,7 +5,7 @@ const { botLog } = require("@auto");
 // --------------------------------------------------------------
 
 module.exports = {
-	name: ["say"],
+	names: ["say"],
 	use: "say tekst",
 	about: "Få botten til å si noe",
 	category: "fun"
