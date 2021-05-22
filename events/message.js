@@ -27,8 +27,9 @@ module.exports.run = async (client, message) => {
     
     if (channel.id === raveyardID) {
         setTimeout(() => {
-            try { message.delete(); }
-            finally { botLog(chalk `{grey Deleted a message in} {${yellow} #${message.channel.name}} {grey after} ${(raveyardTimer/1000).toFixed(0)}s`); }
+            message.delete()
+            .then((msg) => botLog(chalk `{grey Deleted a message in} {${yellow} #${msg.channel.name}} {grey after} ${(raveyardTimer/1000).toFixed(0)}s`))
+            .catch(() => null)
         }, raveyardTimer);
     }
 

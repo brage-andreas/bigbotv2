@@ -7,7 +7,7 @@ const { token } = require("@files/settings.json");
 
 const yellow = "hex('#FFC152')";
 const client = new Discord.Client({
-	ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILDS', 'GUILD_MESSAGES'] }
+	ws: { intents: ["GUILD_PRESENCES", "GUILD_MEMBERS", "GUILDS", "GUILD_MESSAGES"] }
 });
 
 client.commands = new Discord.Collection();
