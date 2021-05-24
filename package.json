@@ -1,21 +1,22 @@
 {
     "dependencies": {
-        "canvas": "^2.7.0",
-        "chalk": "^4.1.1",
-        "discord.js": "^12.5.3",
+        "canvas"      : "^2.7.0",
+        "chalk"       : "^4.1.1",
+        "discord.js"  : "^12.5.3",
         "module-alias": "^2.2.2",
-        "mongoose": "^5.12.7"
+        "mongoose"    : "^5.12.7"
     },
     "name": "biggestofbots",
     "version": "1.0.0",
     "description": "The biggest of bots.",
     "main": "bot.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "run" : "node ."
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hellobafu/BiggestOfBots.git"
+        "url" : "git+https://github.com/hellobafu/BiggestOfBots.git"
     },
     "author": "Dr Drango",
     "license": "ISC",

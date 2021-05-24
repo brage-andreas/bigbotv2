@@ -28,7 +28,7 @@ module.exports.run = async (message, args) => {
     await message.delete();
     channel.messages.fetch({ limit: amount }).then(messages => {
         if (user) messages = messages.filter(msg => msg.author.id === user.id);
-        channel.bulkDelete(messages)
+        channel.bulkDelete(messages, true)
         .then(msgs => {
             if (user) botLog(client.user.id, chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages limited to} ${user.tag} {grey (${user.id})}`);
             else      botLog(client.user.id, chalk `{grey Used} PRUNE {grey on} ${msgs.size} {grey messages}`);

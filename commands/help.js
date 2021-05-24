@@ -22,11 +22,11 @@ module.exports.run = async (message, args) => {
 
     const getI = (i) => i+1 <10 ? String("0"+(i+1)) : String(i+1); 
     const getName = (array) => {
-        let aliases = array.slice(1, array.length);
+        let aliases = array.slice(1);
         return aliases.length ? `${array[0]} (${aliases.join(", ")})` : `${array[0]}`;
     }
 
-    const formatCmds = (commands)           => commands.array().map((cmd, i) => `\`${getI(i)}\` ${getName(cmd.name)}`).join("\n");
+    const formatCmds = (commands)           => commands.array().map((cmd, i) => `\`${getI(i)}\` ${getName(cmd.names)}`).join("\n");
     const getCmds    = (commands, category) => commands.filter(command => command.category.toLowerCase() === category.toLowerCase());
 
     const all = args[0] === "-all";
@@ -65,7 +65,7 @@ module.exports.run = async (message, args) => {
     }
 	
     else {
-		const command = client.commands.filter(cmd => cmd.name.some(name => name === args[0])).first();
+		const command = client.commands.filter(cmd => cmd.names.some(name => name === args[0])).first();
 
 		if (!command) {
             message.react(emoji(client, "err"));
@@ -74,7 +74,7 @@ module.exports.run = async (message, args) => {
 
 		const helpEmbed = new MessageEmbed()
 		.setColor(yellow)
-		.setTitle(getName(command.name))
+		.setTitle(getName(command.names))
 		.setURL(embedURL)
 		.setAuthor(member.displayName, author.displayAvatarURL())
 		.addField(`Hvordan`, `\`${prefix}${command.use}\``)

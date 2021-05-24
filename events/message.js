@@ -9,11 +9,11 @@ module.exports = { name: "message" }
 // --------------------------------------------------------------
 
 module.exports.run = async (client, message) => {
-	const { channel, author, content } = message;
+	const { channel, author, mentions, content } = message;
     const { commands } = client;
 
     const { raveyardID, raveyardTimer } = await config("465490885417762827");
-    const { yellow } = await getColours(client.user.id, true);
+    const { yellow, red } = await getColours(client.user.id, true);
 
 	const prefix = "?"; // TODO: add dynamic, per-server prefix with mongo
 
@@ -36,7 +36,19 @@ module.exports.run = async (client, message) => {
 
     if (author.bot) return;
 
-    if (content === "prefix") return message.channel.send(`**Prefix**: \`${prefix}\`\n\n\`${prefix}help\` for kommandoer`);
+
+    const prefixStr = `**Prefix**: \`${prefix}\`\n\n\`${prefix}help\` for kommandoer`;
+    const filter    = (msg) => msg.content.toUpperCase() === "JA" && msg.author.id === author.id;
+
+    if (content === "prefix") {
+        await channel.send("S-snakker du t-til meg? 😳 kanskje du vil skrive \"**ja**\" o-om det stemmer 👉👈");
+        channel.awaitMessages(filter, { maxProcessed: 1, time: 20000, errors: ["maxProcessed", "time"] })
+        .then( (c) => {
+            if (c.size) channel.send(prefixStr);
+            else channel.send("s-sory da");
+        })
+        .catch(() => channel.send("s-sory"));  
+    }
 
 
 	const args    = content.slice(prefix.length).trim().split(/\s+/g);
@@ -47,6 +59,10 @@ module.exports.run = async (client, message) => {
 
 	const command = commands.find(command => command.names.some(name => name === cmdname));
 
-    if (command) command.run(message, args);
+    if (command) {
+        try { command.run(message, args); }
+        catch (e) { console.log(chalk `{${red} ERROR WHEN RUNNING COMMAND:}\NName: ${command.names}/${cmdname}\n{${red} Error}:${e}`); }
+    }
+
     else if (cmdname.replace(/\?+/g, "")) message.react(emoji(client, "questionmark"));
 }
