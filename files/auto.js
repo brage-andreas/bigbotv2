@@ -50,16 +50,33 @@ const time = () => {
 const emoji = (client, emoji) => {
     const emojiTable = {
         "questionmark": "830465898154033192",
+        "strength3"   : "847464247856201738",
+        "strength2"   : "847464247985569812",
+        "strength1"   : "847464247867736104",
         "check"       : "830470096698081330",
         "time"        : "838012899418963979",
         "err"         : "830465898061889566",
         "adm"         : "830465921205665803"
     }
 
-    const clientEmojiID = emojiTable[emoji];
+    if (emoji === "fullTable") return emojiTable;
 
-    if (!clientEmojiID) return null;
-    else return client.emojis.cache.get(clientEmojiID);
+    if (Object.prototype.toString.call(emoji) === "[object Array]") {
+        let emojiArray = emoji.map(em => {
+            const clientEmojiID = emojiTable[em];
+            return client.emojis.cache.get(clientEmojiID);
+        });
+
+        return emojiArray;
+    }
+    
+    else {
+        const clientEmojiID = emojiTable[emoji];
+    
+        if (!clientEmojiID) return null;
+        return client.emojis.cache.get(clientEmojiID);
+    }
+
 }
 
 

@@ -14,7 +14,7 @@ module.exports = {
 // --------------------------------------------------------------
 
 module.exports.run = async (message, args) => {
-    const botEmojisArray = ["adm", "err", "time", "check", "questionmark"];
+    const botEmojisArray = Object.keys(emoji(null, "fullTable"));
     const { reference, channel, id, client } = message;
 
     if (!args.length) return message.react(emoji(client, "err"));

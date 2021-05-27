@@ -19,7 +19,7 @@ module.exports.run = (message, args) => {
 	message.delete();
 
 	if (!args.length) return channel.send("🤐");
-	channel.send(args.join(" "));
+	channel.send(args.join(" "), { disableMentions: "everyone" });
 
     botLog(client.user.id, chalk `{grey Used} SAY`);
 }

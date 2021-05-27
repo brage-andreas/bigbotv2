@@ -1,6 +1,6 @@
 require("module-alias/register");
 const chalk = require("chalk");
-const { botLog } = require("@auto");
+const { emoji, botLog } = require("@auto");
 
 // --------------------------------------------------------------
 
@@ -15,16 +15,18 @@ module.exports = {
 
 module.exports.run = async (message, args) => {
     const { client, channel } = message;
+    const [strength1, strength2, strength3] = emoji(client, ["strength1", "strength2", "strength3"]);
     const all = args[0] === "-all";
 
     channel.send("...").then(msg => {
-        let heartbeat = client.ws.ping;
-        let ping   = msg.createdTimestamp-message.createdTimestamp-heartbeat;
-        let absPing   = msg.createdTimestamp-message.createdTimestamp;
+        const heartbeat = client.ws.ping;
+        const absPing   = msg.createdTimestamp-message.createdTimestamp;
+        const ping      = absPing-heartbeat<0 ? absPing-heartbeat*-1 : absPing-heartbeat;
+        const emoji     = ping > 300 ? strength1 : ping > 75 ? strength2 : strength3;
 
-        if (all) msg.edit(`Ping/absolutt: \`${ping<0 ? ping*-1 : ping}/${absPing} ms\`\nWS heartbeat: \`${heartbeat} ms\``);
-        else     msg.edit(`Ping: ${ping} ms`);
+        if (all) msg.edit(`Ping/absolutt: \`${ping}/${absPing} ms\`\nWS heartbeat: \`${heartbeat} ms\``);
+        else     msg.edit(`Ping: ${emoji} ${ping} ms`);
     });
 
-    botLog(client.user.id, chalk `{grey Used} PING`);
+    botLog(client.user.id, chalk `{grey Used} PING {grey and got} ${ping}/${absPing} {grey (WSHB: ${heartbeat})}`);
 }

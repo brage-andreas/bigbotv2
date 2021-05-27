@@ -18,7 +18,7 @@ module.exports.run = async (message, args) => {
     const { admins } = await config("465490885417762827");
 
     if (!admins.some(adm => message.author.id === adm)) return message.react(emoji(client, "adm"));
-    if (args.length && !Number(args[0])) return message.react(emoji(client, "err"));
+    if (args.length || !Number(args[0])) return message.react(emoji(client, "err"));
 
     const user = message.mentions.users?.first() || guild.members.cache.get(args[1])?.user;
     if (!user && args[1]) return message.react(emoji(client, "err"));
